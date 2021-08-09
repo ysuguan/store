@@ -1,0 +1,99 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue",
+		"^yd-(.*)": "@/components/yd-$1/yd-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+            "path" : "pages/home/home",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+			"path": "pages/category/category",
+			"style" : {
+				
+			}
+		}
+        ,{
+            "path" : "pages/cart/cart",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+        {
+            "path" : "pages/profile/profile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+            "path" : "pages/commodity/commodity",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "大药房",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom",
+		"app-plus": {
+			"titleView": false,
+			"scrollIndicator": "none"
+		}
+		// ,"scrollIndicator": "none"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#FF2C46",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/image/shop.png",
+				"selectedIconPath": "static/image/shop-fill.png",
+				"text": "首页"
+			},
+			{
+					"pagePath": "pages/commodity/commodity",
+					"iconPath": "static/image/gift.png",
+					"selectedIconPath": "static/image/gift-fill.png",
+					"text": "商品"
+			},
+			{
+				"pagePath": "pages/category/category",
+				"iconPath": "static/image/category.png",
+				"selectedIconPath": "static/image/category-fill.png",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/cart/cart",
+				"iconPath": "static/image/cart.png",
+				"selectedIconPath": "static/image/cart-fill.png",
+				"text": "购物车"
+			}, 
+			{
+				"pagePath": "pages/profile/profile",
+				"iconPath": "static/image/profile.png",
+				"selectedIconPath": "static/image/profile-fill.png",
+				"text": "个人中心"
+			}
+		]
+	}
+}
