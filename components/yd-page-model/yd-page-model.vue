@@ -4,7 +4,7 @@
 			<view class="app-bg-cover"></view>
 		</view>
 		<view class="page-content" ref="pageContent">
-			<slot name="pageContent" :contentWidth="contentWidth"></slot>
+			<slot name="pageContent" :contentWidth="contentWidth" :contentHeight="contentHeight"></slot>
 		</view>
 	</view>
 </template>
@@ -14,11 +14,13 @@
 		name:"yd-page-model",
 		data() {
 			return {
-				contentWidth: 0,
+				contentWidth: 100,
+				contentHeight: 100,
 			};
 		},
 		mounted() {
 			this.contentWidth = this.$refs.pageContent.$el.offsetWidth;
+			this.contentHeight = this.$refs.pageContent.$el.offsetHeight;
 		}
 	}
 </script>
@@ -41,7 +43,8 @@
 	.app-bg-cover{
 		height: 33vh;
 		width: 100vw;
-		background: linear-gradient(rgba(14, 123, 254, .3), rgba(256,256,256,1));
+		background: linear-gradient(rgba(256, 256, 256, 0), rgba(256,256,256,1));
 	}
 }
+
 </style>

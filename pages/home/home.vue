@@ -1,20 +1,18 @@
 <template>
-	<view class="page-wrap">
-		<view class="app-bg">
-			<view class="app-bg-cover"></view>
-		</view>
-		<view class="content-wrap" ref="contentWrap">
-			<scroll-view class="primary-scroll" scroll-y="true" @scroll='scrollPrimary'>
-				<view class="search-wrap">
-					<yd-naviSearch :opacityAlive="primaryScrollY" :customWidth="contentWidth" :top="searchOffsetTop"></yd-naviSearch>
-				</view>
-				<u-sticky ref="tabList" class="box-common" bg-color="transparent" offset-top="0" h5-nav-height="0">
-					<u-tabs class="tabList" :list="tabList" :is-scroll="false" :current="currentTabIndex" 
-					@change="tabChange" bg-color="transparent" inactive-color="white" active-color="white">
-					</u-tabs>
-				</u-sticky>
-				
-				<scroll-view class="second-scroll" :scroll-y="secondAllow" >
+	<yd-page-model ref="pageModel">
+		<template v-slot:pageContent='pageContent'>
+			<yd-stack-scroll :primaryH='pageContent.contentHeight' :secondH="secondScrollHeight">
+				<template v-slot:head="primary">
+					<view>
+						<view class="search-wrap">
+							<yd-naviSearch :opacityAlive="primary.primaryScrollY" :customWidth="pageContent.contentWidth" :top="searchOffsetTop"></yd-naviSearch>
+						</view>
+						<u-tabs ref="tabList" class="tabList" :list="tabList" :is-scroll="false" :current="currentTabIndex" 
+						@change="tabChange" bg-color="transparent" inactive-color="white" active-color="white">
+						</u-tabs>
+					</view>
+				</template>
+				<template v-slot:content>
 					<view class="content-box">
 						<u-swiper class="box-common" :list="swiperList" height="400"></u-swiper>
 						
@@ -33,22 +31,20 @@
 							</template>
 						</yd-type-recommand>
 					</view>
-				</scroll-view>
-			</scroll-view>
-		</view>
-		
-	</view>
-	
+				</template>
+			</yd-stack-scroll>
+		</template>
+	</yd-page-model>
 </template>
 
 <script>
 	export default {
 		data() {
 			return {
-				primaryScrollY: 0,
+				secondScrollHeight: 375,
+				
 				currentTabIndex: 0,
-				contentWidth: 0,
-				searchOffsetTop: 20,
+				searchOffsetTop: 10,
 				tabList: [
 					{"name": "精选"},
 					{"name": "商品"},
@@ -78,7 +74,7 @@
 			}
 		},
 		mounted() {
-			this.contentWidth = this.$refs.tabList.$el.offsetWidth;
+			this.secondScrollHeight  = this.$refs.pageModel.contentHeight - this.$refs.tabList.$el.offsetHeight;
 		},
 		computed:{
 			comList1(){

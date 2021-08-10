@@ -1,19 +1,19 @@
 <template>
-	<yd-page-model>
+	<yd-page-model ref="pageModel">
 		<template v-slot:pageContent="pageContent">
-			<yd-stack-scroll :primaryH='primaryHeight' :secondH="secondHeight" :key='comKey'>
+			<yd-stack-scroll :primaryH='pageContent.contentHeight' :secondH="secondScrollHeight">
 				<template v-slot:head="primary">
-					<view class="">
+					<view>
 						<view class="search-wrap">
 							<yd-naviSearch :opacityAlive="primary.primaryScrollY" :customWidth="pageContent.contentWidth" :top="searchOffsetTop"></yd-naviSearch>
 						</view>
 						<view ref='tabList' class="tab-list">
-							<yd-commodity-tabs></yd-commodity-tabs>
+							<yd-commodity-tabs @commodityTabsClick="commodityTabsClick"></yd-commodity-tabs>
 						</view>
 					</view>
 				</template>
 				<template v-slot:content>
-					<view class="">test test</view>
+					<yd-commodity-list :list='[20]' :mode='listMode'></yd-commodity-list>
 				</template>
 			</yd-stack-scroll>
 		</template>
@@ -26,25 +26,21 @@
 		data() {
 			return {
 				searchOffsetTop: 10,
-				primaryHeight: 375,
-				secondHeight: 375,
-				
+				secondScrollHeight: 600,
 				comKey: 0,
+				listMode: 'list',
 			}
 		},
 		mounted(){
-			uni.getSystemInfo({
-				success: this.changePrimaryHeight
-			});
-			this.secondHeight = this.primaryHeight - this.$refs.tabList.$el.offsetHeight;
+			this.secondScrollHeight = this.$refs.pageModel.contentHeight - this.$refs.tabList.$el.offsetHeight;
 		},
 		computed: {
 			
 		},
 		methods:{
-			changePrimaryHeight(res){
-				this.primaryHeight = res.windowHeight;
-			}
+			commodityTabsClick(args){
+				this.listMode = args.showMode==0?'block':'list';
+			},
 		},
 	}
 </script>
