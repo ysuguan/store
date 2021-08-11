@@ -5,8 +5,8 @@
 		</view>
 		<view class="com-desc">
 			<view class="top">
-				<view class="title">
-					<u-tag class="tag" text="热销" shape="circle" :show="true" color="white" bgColor="red"></u-tag>
+				<view class="title" :style="setMiniStyle('titleFS')">
+					<u-tag v-if="!mini" class="tag" text="热销" shape="circle" :show="true" color="white" bgColor="red"></u-tag>
 					<text class="brand">品牌</text>
 					<text class="name">名字</text>
 					<text class="specs">规格</text>
@@ -17,12 +17,12 @@
 				
 				
 				<view class="left">
-					<view class="rank">
+					<view v-if="!mini" class="rank">
 						<u-tag class="remarks" text="感冒药排名第1" :show="true" mode="light" type="error">
 						</u-tag>
 					</view>
-					<view class="price">
-						<view class="price-now">¥ <text>229.00</text></view>
+					<view class="price" :style="setMiniStyle('priceLogoFS')">
+						<view class="price-now">¥ <text :style="setMiniStyle('priceFS')">229.00</text></view>
 						<view class="price-add">
 							<slot name="priceAdd"></slot>
 						</view>
@@ -33,10 +33,12 @@
 				</view>
 			</view>
 			<view class="bottom">					
-				<view class="comments">
-					<text class="number">10万+条评价</text>
-					<text class="good-rate">好评98%</text>
-				</view>
+				<slot name="bottom">
+					<view class="comments">
+						<text class="number">10万+条评价</text>
+						<text class="good-rate">好评98%</text>
+					</view>
+				</slot>
 			</view>
 		</view>
 	</view>
@@ -54,6 +56,11 @@
 					return ['horizontal', 'vertical'].indexOf(value) !== -1;
 				}
 			},
+			//首页需要mini的块状显示，mini尺寸下缩小字体，去除不必要的模块
+			mini: {
+				type: Boolean,
+				default: false,
+			},
 			//允许动态设置组件宽高---默认占满父元素宽度
 			height: null,
 			width: null,
@@ -67,7 +74,12 @@
 				dynamicClass: {
 					horizontal: 'com-wrap-h',
 					vertical: 'com-wrap-v'
-				}
+				},
+				miniSize: {
+					titleFS: 7,
+					priceLogoFS: 7,
+					priceFS:3,
+				},
 			};
 		},
 		computed: {
@@ -81,7 +93,17 @@
 				}
 				return res;
 			}
-		}
+		},
+		methods:{
+			setMiniStyle(tag){
+				if(!this.mini){
+					return {};
+				}
+				return {
+					'font-size': this.miniSize[tag]+'rpx',
+				}
+			}
+		},
 	}
 </script>
 

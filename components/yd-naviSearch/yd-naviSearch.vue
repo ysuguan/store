@@ -58,7 +58,10 @@
 		methods: {
 			//点击跳转搜索页
 			goSearch(){
-				console.log('navigating to search...');
+				console.log(13);
+				uni.navigateTo({
+					url: '/pages/search/search',
+				})
 			},
 			//修改透明度和visibility
 			changePerformance() {

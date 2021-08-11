@@ -4,7 +4,12 @@
 		<u-grid col="3" :border="false" bg-color="white">
 			<u-grid-item v-for="(commodity,index) in comList" :key='index+title' 
 			:custom-style="{padding: '0', margin: '0'}" @click="commodityClick(commodity.url)">
-				<yd-commodity-mini :commodity="commodity"></yd-commodity-mini>
+				<!-- <yd-commodity-mini :commodity="commodity"></yd-commodity-mini> -->
+				<yd-commodity-dynamic :mini="true" height="300" width="200">
+					<template v-slot:bottom>
+						<view>123</view>
+					</template>
+				</yd-commodity-dynamic>
 			</u-grid-item>
 		</u-grid>
 	</view>

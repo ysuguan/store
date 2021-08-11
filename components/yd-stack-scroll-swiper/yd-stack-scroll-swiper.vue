@@ -6,9 +6,15 @@
 		</view>
 		
 		<view ref="content" class="content">
-			<scroll-view class="second-scroll" scroll-y="true" :style="secondStyle" @scroll='scrollSecond'>
-				<slot name="content" :secondScrollY="secondScrollY"></slot>
-			</scroll-view>
+			<swiper :style="swiperHeight" :indicator-dots="false" :autoplay="false" :current="currentSwiperItem" @change="changeSwiper">
+				<swiper-item :height='secondH' v-for="item in swiperCount">
+					<scroll-view class="second-scroll" scroll-y="true" :style="secondStyle" @scroll='scrollSecond'>
+						<!-- 可能有多个swiper-item，所以具名插槽名称需要变动 -->
+						<slot :name="'content'+item" :secondScrollY="secondScrollY"></slot>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+			
 		</view>
 		
 	</scroll-view>
@@ -16,14 +22,8 @@
 
 <script>
 	//双层滚动窗嵌套组件，优先滚动外层
-	
-	
-	//子窗口上滑，查看父窗口是否触底，未触底则将父元素上滑同样距离
-	//子窗口下滑，查看父窗口是否触顶，未触顶则将父元素下滑同样距离
-	
-	//父窗口触顶/触底可通过比较primaryScrollY和父窗口可滚动距离（父窗口内容高度-父窗高度）来计算
 	export default {
-		name: "yd-stack-scroll",
+		name: "yd-stack-scroll-swiper",
 		props:{
 			//根滚动窗的高度
 			primaryH: {
@@ -34,7 +34,16 @@
 			secondH: {
 				type: Number,
 				required: true,
-			}
+			},
+			
+			swiperCount: {
+				type: Number,
+				default:1,
+			},
+			customSwiperItem: {
+				type: Number,
+				default: 0,
+			},
 		},
 		data() {
 			return {
@@ -48,6 +57,8 @@
 				
 				primaryAtTop: true,
 				primaryAtBottom: false,
+				
+				currentSwiperItem: 0,
 			}
 		},
 		mounted(){
@@ -63,7 +74,12 @@
 				return {
 					height: this.secondH + 'px',
 				}
-			}
+			},
+			swiperHeight(){
+				return {
+					height: this.secondH + 'px',
+				}
+			},
 		},
 		methods: {
 			primaryTouchTop(){
@@ -97,8 +113,17 @@
 						this.primaryTop = scroll;
 					}
 				}
+			},
+			changeSwiper(e){
+				this.currentSwiperItem = e.detail.current;
+				this.$emit('changeSwiper', {currentSwiperItem: this.currentSwiperItem});
 			}
 		},
+		watch:{
+			customSwiperItem(val, valOld){
+				this.currentSwiperItem = val;
+			}
+		}
 	}
 </script>
 

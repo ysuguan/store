@@ -1,8 +1,8 @@
 <template>
 	<view class="page-wrap">
 		<view class="app-bg">
-			<view class="app-bg-cover"></view>
 		</view>
+		<view class="app-bg-cover"></view>
 		<view class="page-content" ref="pageContent">
 			<slot name="pageContent" :contentWidth="contentWidth" :contentHeight="contentHeight"></slot>
 		</view>
@@ -34,17 +34,26 @@
 	
 .app-bg{
 	position: fixed;
-	z-index: -1;
+	z-index: -2;
 	height: 33vh;
 	width: 100vw;
 	background-image: url(../../static/image/app-bg.jpeg);
 	background-size: cover;
-	
-	.app-bg-cover{
-		height: 33vh;
-		width: 100vw;
-		background: linear-gradient(rgba(256, 256, 256, 0), rgba(256,256,256,1));
-	}
+	filter:brightness(85%);
+}
+.app-bg::before{
+	content: '';
+	display: block;
+	height: 23vh;
+	width: 100%;
+		
+}
+.app-bg-cover{
+	position: fixed;
+	z-index: -1;
+	height: 33vh;
+	width: 100vw;
+	background: linear-gradient(rgba(256, 256, 256, 0), rgba(256,256,256,1));
 }
 
 </style>

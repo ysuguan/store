@@ -67,4 +67,5 @@
 .list-item{
 	margin-bottom: 10rpx;
 }
+
 </style>

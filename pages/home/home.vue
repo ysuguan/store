@@ -1,7 +1,7 @@
 <template>
 	<yd-page-model ref="pageModel">
 		<template v-slot:pageContent='pageContent'>
-			<yd-stack-scroll :primaryH='pageContent.contentHeight' :secondH="secondScrollHeight">
+			<yd-stack-scroll-swiper :primaryH='pageContent.contentHeight' :secondH="secondScrollHeight">
 				<template v-slot:head="primary">
 					<view>
 						<view class="search-wrap">
@@ -12,10 +12,9 @@
 						</u-tabs>
 					</view>
 				</template>
-				<template v-slot:content>
+				<template v-slot:content1>
 					<view class="content-box">
 						<u-swiper class="box-common" :list="swiperList" height="400"></u-swiper>
-						
 						<view class="recommand-box box-common">
 							<view class="recommand-item" v-for="item in 10" :key="item+'recommand'">
 								<image class="recommand-img" :src="recommandList[0].image" mode="aspectFill"></image>
@@ -32,7 +31,7 @@
 						</yd-type-recommand>
 					</view>
 				</template>
-			</yd-stack-scroll>
+			</yd-stack-scroll-swiper>
 		</template>
 	</yd-page-model>
 </template>
@@ -112,43 +111,6 @@
 </script>
 
 <style lang="scss" scoped>
-.primary-scroll{
-	height: calc(100vh - 50px);
-}
-
-.second-scroll{
-	height: calc(100vh - 90px);
-}
-
-.app-bg{
-	position: fixed;
-	z-index: -1;
-	height: 33vh;
-	width: 100vw;
-	background-image: url(../../static/image/app-bg.jpeg);
-	background-size: cover;
-	
-	.app-bg-cover{
-		height: 33vh;
-		width: 100vw;
-		background: linear-gradient(rgba(14, 123, 254, .3), rgba(256,256,256,1));
-	}
-}
-
-/deep/ u-sticky{
-	width:100%;
-	
-}
-.content-wrap {
-	z-index: 10;
-	padding: 0 20rpx;
-	.content-box {
-		width: 100%;
-		background-color: #f0f0f0;
-		border-radius: 10rpx;
-	}
-}
-
 //各个区块共有的布局
 .box-common{
 	margin-top: 20rpx;
