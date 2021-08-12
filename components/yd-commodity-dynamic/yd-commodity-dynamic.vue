@@ -4,7 +4,7 @@
 			<image :src="imgSrc" mode="scaleToFill"></image>
 		</view>
 		<view class="com-desc">
-			<view class="top">
+			<view class="up-side">
 				<view class="title" :style="setMiniStyle('titleFS')">
 					<u-tag v-if="!mini" class="tag" text="热销" shape="circle" :show="true" color="white" bgColor="red"></u-tag>
 					<text class="brand">品牌</text>
@@ -13,9 +13,7 @@
 					<text class="effect">功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效</text>
 				</view>
 			</view>
-			<view class="middle">
-				
-				
+			<view class="down-side">
 				<view class="left">
 					<view v-if="!mini" class="rank">
 						<u-tag class="remarks" text="感冒药排名第1" :show="true" mode="light" type="error">
@@ -27,19 +25,28 @@
 							<slot name="priceAdd"></slot>
 						</view>
 					</view>
+					<view class="bottom">
+						<slot name="bottom">
+							<view class="comments">
+								<text class="number">10万+条评价</text>
+								<text class="good-rate">好评98%</text>
+							</view>
+						</slot>
+					</view>
 				</view>
 				<view class="right">
 					<slot name="customButton"></slot>
 				</view>
 			</view>
-			<view class="bottom">					
+			
+			<!-- <view class="bottom">					
 				<slot name="bottom">
 					<view class="comments">
 						<text class="number">10万+条评价</text>
 						<text class="good-rate">好评98%</text>
 					</view>
 				</slot>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -161,9 +168,13 @@ $comments-color: #606266;
 	}
 	
 	.com-desc{
+		display: flex;
+		flex-wrap: nowrap;
+		flex-direction: column;
 		padding: 10rpx;
-		.top{
-			height: 35%;
+		.up-side{
+			flex-basis: 200rpx;
+			flex-grow: 1;
 			.title{
 				text-overflow: ellipsis;
 				display: -webkit-box;
@@ -177,15 +188,16 @@ $comments-color: #606266;
 					padding: 6rpx;
 				}
 			
-				
 				text{
 					margin-left: 10rpx;
 				}
+				
 			}
 		}
 		
-		.middle{
-			height: 45%;
+		.down-side{
+			flex-basis:200rpx;
+			flex-grow: 1;
 			display: flex;
 			flex-wrap: nowrap;
 			margin-top: 10rpx;
@@ -207,7 +219,7 @@ $comments-color: #606266;
 					display: flex;
 					flex-wrap: nowrap;
 					align-items: stretch;
-					flex-shrink: 0;
+					// flex-shrink: 0;
 					width: 100%;
 					font-size: $price-logo-size;
 					.price-now{
@@ -223,20 +235,38 @@ $comments-color: #606266;
 						align-items: end;
 					}
 				}
+				
+				.bottom{
+					
+					.comments{
+						font-size: $comments-font-size;
+						color: $comments-color;
+						
+						text{
+							padding-right: 20rpx;
+						}
+					}
+				}
+			}
+			.right{
+				display: flex;
+				flex-wrap: nowrap;
+				align-items: flex-end;
 			}
 		}
 		
-		.bottom{
-			height: 20%;
-			.comments{
-				font-size: $comments-font-size;
-				color: $comments-color;
+		// .bottom{
+		// 	flex-basis: 100rpx;
+		// 	flex-shrink: 1;
+		// 	.comments{
+		// 		font-size: $comments-font-size;
+		// 		color: $comments-color;
 				
-				text{
-					padding-right: 20rpx;
-				}
-			}
-		}
+		// 		text{
+		// 			padding-right: 20rpx;
+		// 		}
+		// 	}
+		// }
 	}
 }
 </style>

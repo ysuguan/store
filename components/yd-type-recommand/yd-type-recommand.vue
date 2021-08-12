@@ -7,7 +7,7 @@
 				<!-- <yd-commodity-mini :commodity="commodity"></yd-commodity-mini> -->
 				<yd-commodity-dynamic :mini="true" height="300" width="200">
 					<template v-slot:bottom>
-						<view>123</view>
+						<view></view>
 					</template>
 				</yd-commodity-dynamic>
 			</u-grid-item>

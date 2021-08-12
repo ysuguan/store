@@ -82,6 +82,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/collocation/collocation",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
