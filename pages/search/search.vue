@@ -7,12 +7,12 @@
 					<view class="search-wrap">
 						<u-icon name="arrow-left" size="40" @click="goBack"></u-icon>
 						<u-search class="search" v-model="keyWord" :placeholder="hotWord[0].name" :show-action="simpleMode||searchOnFocus" 
-						@search="goSearch" @custom="goSearch" @focus="searchFocus" @blur="searchBlur"></u-search>
+						@search="goSearch" @change="changeMode" @custom="goSearch" @focus="searchFocus" @blur="searchBlur"></u-search>
 					</view>
 					<view v-if="simpleMode" class="hot-word">
 						<view class="title">热搜</view>
 						<view class="tags">
-							<view class="tag" v-for="(item, index) in hotWord" :key="item.name+index">
+							<view class="tag" v-for="(item, index) in hotWord" :key="item.name+index" @click="goSearch(item.name)">
 								<u-tag :show="item.pop" text="爆" color="white" bg-color="#F0AD4E" border-color="transparent" size="10"></u-tag>
 								<text>{{item.name}}</text>
 							</view>
@@ -105,6 +105,12 @@
 				this.listMode = args.showMode==0?'block':'list';
 				this.currentTab = args.currentTab;
 			},
+			changeMode() {
+				this.keyWord = trim(this.keyWord);
+				if(this.keyWord.length<=0){
+					this.simpleMode = true;
+				}
+			},
 			//搜索框获得焦点，展示搜索按键
 			searchFocus() {
 				this.searchOnFocus = true;
@@ -122,16 +128,17 @@
 					uni.navigateBack({});
 				}
 			},
-			goSearch() {
+			goSearch(text=null) {
+				if(text){
+					this.keyWord = text;
+				}
 				this.keyWord = trim(this.keyWord);
 				if(this.keyWord.length<=0){
-					this.simpleMode = true;
-					return;
+					this.keyWord = this.hotWord[0].name;
 				}
 				uni.navigateTo({
 					url: "/pages/search/search?text="+this.keyWord,
 				})
-				
 			}
 		},
 	}

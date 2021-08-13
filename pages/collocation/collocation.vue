@@ -43,7 +43,7 @@
 							<u-icon name="rmb" size="15" color="#FC3C2D"></u-icon>
 							<text class="price-num">229.00</text>
 						</view>
-						<u-button class="add-cart" type="error" shape="circle" :customStyle="btnCartStyle" @tap="addCart">加入购物车</u-button>
+						<u-button class="add-cart" type="error" shape="circle" :customStyle="btnCartStyle" @tap="showDetail">加入购物车</u-button>
 					</view>
 				</view>
 			</view>
@@ -95,7 +95,7 @@
 							<u-icon name="rmb" size="15" color="#FC3C2D"></u-icon>
 							<text class="price-num">229.00</text>
 						</view>
-						<u-button class="add-cart" type="error" shape="circle" :customStyle="btnCartStyle" @tap="addCart">加入购物车</u-button>
+						<u-button class="add-cart" type="error" shape="circle" :customStyle="btnCartStyle" @tap="showDetail">加入购物车</u-button>
 					</view>
 				</view>
 			</view>
@@ -104,9 +104,11 @@
 			<u-toast ref="toast" :style="{backgroundColor:'black'}"></u-toast>
 		</view>
 		<view>
-			<u-popup v-model="optionsShow">
-				
-			</u-popup>
+			<!--加入购物车弹出层 -->
+			<yd-select-popup v-if="popNew" :comShow="selectPopShow" @popClose="popClose" :commitUrl="'commitUrl23'" @addCart="addCart"></yd-select-popup>
+		</view>
+		<view class="go-collocation" @tap="goBack">
+			<u-icon name="arrow-left" size="50" color="white"></u-icon>
 		</view>
 	</scroll-view>
 </template>
@@ -115,6 +117,8 @@
 	export default {
 		data() {
 			return {
+				selectPopShow: false,
+				popNew: true,
 			}
 		},
 		mounted() {
@@ -131,10 +135,27 @@
 			}
 		},
 		methods: {
-			addCart() {
-				this.$refs.toast.show({
-					title: '加入购物车成功',
+			goBack() {
+				uni.navigateBack({});
+			},
+			showDetail() {
+				this.selectPopShow = true;
+			},
+			addCart(args) {
+				this.selectPopShow = false;
+				this.popNew = false;
+				this.$nextTick(function(){
+					this.popNew = true;
 				})
+				if(args.res=='success'){
+					this.$refs.toast.show({
+						title: '加入购物车成功',
+					})
+				}else{
+					this.$refs.toast.show({
+						title: '添加失败：'+args.res,
+					})
+				}
 			},
 			showOptions() {
 				console.log(123);
@@ -151,6 +172,9 @@
 					background: `url(${item}) no-repeat center`, backgroundSize: '100% 100%',
 				};
 			},
+			popClose() {
+				this.selectPopShow = false;
+			}
 		}
 	}
 </script>
@@ -158,10 +182,6 @@
 <style lang="scss" scoped>
 $title-height: 50rpx;
 $border-raduis: 20rpx;
-$basic-color:#FD582F ;
-$linear-color-start: #FC3C2D;
-$linear-color-end: #FF9933;
-
 
 .page-wrap {
 	background-color: black;
@@ -298,5 +318,17 @@ $linear-color-end: #FF9933;
 			color: $basic-color;
 		}
 	}
+}
+.go-collocation{
+	position: fixed;
+	top: 30rpx;
+	left: 40rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 60rpx;
+	width: 60rpx;
+	border-radius: 30rpx;
+	background-color: rgba($color: #000000, $alpha: .3);
 }
 </style>

@@ -26,6 +26,10 @@
 </script>
 
 <style lang="scss" scoped>
+.page-wrap{
+	background-color: $page-bgc;
+	z-index: -1;
+}
 .page-content {
 	z-index: 10;
 	margin: 0 20rpx;
@@ -34,7 +38,7 @@
 	
 .app-bg{
 	position: fixed;
-	z-index: -2;
+	z-index: 0;
 	height: 33vh;
 	width: 100vw;
 	background-image: url(../../static/image/app-bg.jpeg);
@@ -50,10 +54,10 @@
 }
 .app-bg-cover{
 	position: fixed;
-	z-index: -1;
+	z-index: 0;
 	height: 33vh;
 	width: 100vw;
-	background: linear-gradient(rgba(256, 256, 256, 0), rgba(256,256,256,1));
+	background: linear-gradient(rgba($color: $page-bgc, $alpha: 0),rgba($color: $page-bgc, $alpha: 1.0));
 }
 
 </style>
