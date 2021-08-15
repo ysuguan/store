@@ -1,5 +1,5 @@
 {
-    "name" : "Integral",
+    "name" : "DrugStore",
     "appid" : "__UNI__F707FE3",
     "description" : "",
     "versionName" : "1.0.0",
@@ -55,8 +55,8 @@
             },
             "icons" : {
                 "android" : {
-                    "xxxhdpi" : "C:/Users/Z/Desktop/miaoxuanhaohuo.png",
-                    "xxhdpi" : "C:/Users/Z/Desktop/miaoxuanhaohuo.png"
+                    "xxxhdpi" : "",
+                    "xxhdpi" : ""
                 }
             }
         },
@@ -103,17 +103,18 @@
             "mode" : "history",
             "base" : "/h5/"
         },
-        "title" : "苗讯严选",
-        "domain" : "jxjifen.yanxuan8.cn/h5",
+        "title" : "大药房",
+        // "domain" : "jxjifen.yanxuan8.cn/h5",
         "optimization" : {
             "treeShaking" : {
                 "enable" : true
             }
         },
-        "publicPath" : "https://sms-shop.oss-cn-beijing.aliyuncs.com/jf_mall/",
+        // "publicPath" : "https://sms-shop.oss-cn-beijing.aliyuncs.com/jf_mall/",
         "uniStatistics" : {
             "enable" : true
-        }
+        },
+        "template" : "index.html"
     },
     "mp-qq" : {
         "uniStatistics" : {

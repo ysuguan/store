@@ -1,22 +1,370 @@
 <template>
-	<view>
-		购物车
+<view>
+	<view class="page-wrap" ref="pageWrap">
+		<yd-stack-scroll-swiper :primaryH="primaryScrollH" :secondH="secondScrollH">
+			<template v-slot:head>
+				<view class="head">
+					<view class="title">
+						<view>购物车</view>
+						<view>
+							<text class="edit">编辑</text>
+							<u-icon name='edit-pen-fill'></u-icon>
+						</view>
+					</view>
+					<view class="tabs" ref="tabs">
+						<view :class="{'tab-a': currentTab==0}" @tap="tabClick(0)">全部{{comCount}}</view>
+						<view class="filter" :class="{'tab-a': currentTab==1}" @tap="tabClick(1)">
+							<view class="filter-text">筛选</view>
+							<view class="filter-icon" :class="{'filter-icon-a': currentTab==1}"></view>
+						</view>
+					</view>
+				</view>
+			</template>
+			<template v-slot:content1>
+				<view class="com-list">
+					<view class="com-item" v-for="(item, index) in cartsAll">
+						<view class="left">
+							<u-checkbox class="check-box" shape='circle' activeColor='#FD582F'
+							:name="index" :key="item.id+index" v-model="item.checked"></u-checkbox>
+							<view class="image">
+								<image src="../../static/image/commodity.png" mode="aspectFit"></image>
+							</view>
+						</view>
+						<view class="right">
+							<view class="desc">
+								<text>{{item.brand}}</text>
+								<text>{{item.name}}</text>
+								<text>{{item.desc}}</text>
+							</view>
+							<view class="reset" @click="clickReset(index)">
+								<view class="text">
+									{{item.type+'  '+item.specifications}}
+								</view>
+								<u-icon name="arrow-down"></u-icon>
+							</view>
+							<view class="count">
+								<view class="price">
+									¥{{item.price * item.number}}
+								</view>
+								<view class="number">
+									<u-number-box v-model='item.number' :min="item.numMin" :max="item.numMax" 
+									@change="changNumber" @plus="isLimit(index)" @minus="isLimit(index)"></u-number-box>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+			</template>
+		</yd-stack-scroll-swiper>
+		<yd-select-popup :comShow="resetShow" @addCart="resetType" @popClose="closeReset"></yd-select-popup>
 	</view>
+	<view ref="bottom" class="bottom">
+		<u-checkbox labelSize='30'>全选</u-checkbox>
+		<view class="total-price">合计：¥{{totalPrice}}</view>
+		<button class="go-order" type="default">去结算({{totalNumber}})</button>
+	</view>
+</view>
 </template>
 
 <script>
+	import Vue from 'vue'
+	
 	export default {
+		name: 'cart',
 		data() {
 			return {
-				
+				primaryScrollH: 375,
+				secondScrollH: 375,
+				filterBy: null,
+				currentTab: 0,
+				test: 0,
+				comChecked: false,
+				resetShow: false,
+				cartsAll: [
+					{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},{
+						id:2333,
+						name: '感冒灵颗粒',
+						brand: '999牌',
+						desc: '外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药',
+						price: 199,
+						number: 3,
+						type: '甲型',
+						specifications: '【70g*30袋】国产高端',
+					},
+				],
+			}
+		},
+		beforeMount() {
+			//u-checkbox的v-model要求，响应式初始化选择状态为false
+			this.cartsAll.forEach(item => {
+				Vue.set(item, 'checked', false);
+				Vue.set(item, 'numMin', 1);
+				Vue.set(item, 'numMax', 5);
+			})
+		},
+		mounted() {
+			this.primaryScrollH = this.$refs.pageWrap.$el.offsetHeight - this.$refs.bottom.$el.offsetHeight;
+			this.secondScrollH = this.primaryScrollH - this.$refs.tabs.$el.offsetHeight;
+		},
+		computed:{
+			comCount() {
+				if(!this.filterBy){
+					return '  '+this.cartsAll.length;
+				}
+			},
+			totalPrice() {
+				let res = 0;
+				this.cartsAll.forEach(item => res += item.checked?item.price*item.number:0)
+				return res;
+			},
+			totalNumber() {
+				let res = 0;
+				this.cartsAll.forEach(item => res += item.checked?item.number:0)
+				return res;
 			}
 		},
 		methods: {
-			
+			tabClick(index) {
+				this.currentTab = index;
+			},
+			changNumber(e) {
+				
+			},
+			//应当有个全页面可用的防抖函数，每秒之触发一次极值弹窗
+			isLimit(index) {
+				let info = '';
+				if(this.cartsAll[index].number==this.cartsAll[index].numMax){
+					info = '最多购买'+this.cartsAll[index].numMax+'件哦';
+				}else if(this.cartsAll[index].number==this.cartsAll[index].numMin){
+					info = '最少购买'+this.cartsAll[index].numMin+'件哦';
+				}else{
+					return;
+				}
+				uni.showToast({
+					title: info,
+				})
+			},
+			//每次修改都要和服务器同步
+			clickReset(index) {
+				this.resetShow = true;
+			},
+			closeReset() {
+				this.resetShow = false;
+			},
+			resetType(args) {
+				this.resetShow = false;
+				if(args.res=='success'){
+				}
+			}
 		}
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+.page-wrap{
+	padding: 0 20rpx;
+	height: calc(100vh - 50px);
+	background-color: $page-bgc;
+}
 
+.head{
+	.title{
+		display: flex;
+		justify-content: space-between;
+		height: 50rpx;
+		margin: 20rpx 0;
+		
+		view:nth-child(1){
+			font-size: 40rpx;
+			color: black;
+		}
+		
+		.edit{
+			margin-right: 10rpx;
+		}
+	}
+	.tabs{
+		display: flex;
+		justify-content: space-between;
+		height: 90rpx;
+		padding: 20rpx 0;
+		.filter{
+			display: flex;
+			
+			.filter-icon{
+				height: 40rpx;
+				width: 40rpx;
+				margin-left: 10rpx;
+				background: url(../../static/image/filter.svg);
+				background-size: cover;
+			}
+			
+			.filter-icon-a{
+				background: url(../../static/image/filter-a.svg);
+				background-size: cover;
+			}
+		}
+		
+		.tab-a{
+			font-weight: bold;
+			color: $basic-color;
+		}
+	}
+}
+
+.com-item{
+	display: flex;
+	height: 300rpx;
+	margin-bottom: 15rpx;
+	border-radius: 20rpx;
+	background-color: white;
+	
+	.left{
+		display: flex;
+		align-self:start;
+		align-items: center;
+		justify-content: space-around;
+		width: 35%;
+		padding-top: 20rpx;
+		.check-box{
+			height: 40rpx;
+			width: 40rpx;
+			
+		}
+		.image{
+			height: 180rpx;
+			width: 180rpx;
+			
+			image{
+				height: 100%;
+				width: 100%;
+				border-radius: 10rpx;
+			}
+		}
+	}
+	.right{
+		flex-grow: 1;
+		display: flex;
+		flex-wrap: wrap;
+		padding: 20rpx;
+		.desc{
+			height: 80rpx;
+			// line-height: 40rpx;
+			text-overflow: -o-ellipsis-lastline;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			line-clamp: 2;
+			-webkit-box-orient: vertical;
+			
+			text{
+				margin-right: 10rpx;
+			}
+		}
+		
+		.reset{
+			align-self: flex-start;
+			display: flex;
+			align-items: center;
+			height: 50rpx;
+			width: 300rpx;
+			background-color: #E1E1E1;
+			border-radius: 25rpx;
+			padding: 5rpx;
+			
+			.text{
+				width: 250rpx;
+				font-size: 20rpx;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				white-space: nowrap;
+			}
+		}
+		.count{
+			align-self: flex-end;
+			flex-grow: 1;
+			display: flex;
+			justify-content: space-between;
+			color: $basic-color;
+		}
+	}
+}
+
+.bottom{
+	position: fixed;
+	display: flex;
+	align-items: center;
+	bottom: 50px;
+	width: 100vw;
+	height: 90rpx;
+	color: $basic-color;
+	font-size: 30rpx;
+	background-color: white;
+	border-top: 1px solid #F8F8F8;
+	padding-left: 20rpx;
+	
+	.go-order{
+		height: 80rpx;
+		line-height: 80rpx;
+		margin-right: 20rpx;
+		font-size: 30rpx;
+		color: white;
+		background-color: $basic-color;
+	}
+}
 </style>
