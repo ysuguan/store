@@ -8,13 +8,17 @@
 		<view ref="content" class="content">
 			<swiper :style="swiperHeight" :indicator-dots="false" :autoplay="false" :current="currentSwiperItem" @change="changeSwiper">
 				<swiper-item :height='secondH' v-for="item in swiperCount">
-					<scroll-view class="second-scroll" scroll-y="true" :style="secondStyle" @scroll='scrollSecond'>
+					<!-- 多滚动窗口需要记录各自的滚动距离 -->
+					<scroll-view class="second-scroll" scroll-y="true" :style="secondStyle"  :id="item-1" :scroll-top="itemScrollY[item-1]"
+					@scroll='scrollSecond'>
 						<!-- 可能有多个swiper-item，所以具名插槽名称需要变动 -->
-						<slot :name="'content'+item" :secondScrollY="secondScrollY"></slot>
+						<slot :name="'content'+item" :secondScrollY="itemScrollY[item-1]"></slot>
 					</scroll-view>
 				</swiper-item>
 			</swiper>
-			
+		</view>
+		<view class="back-top" ref="backTop" v-show="backTopShow" @tap='backTop' :style="{bottom: backTopBottom+'rpx'}">
+			<image src="../../static/image/back-top.svg" mode="aspectFit"></image>
 		</view>
 		
 	</scroll-view>
@@ -36,6 +40,11 @@
 				required: true,
 			},
 			
+			backTopBottom: {
+				type: Number,
+				default: 140,
+			},
+			
 			swiperCount: {
 				type: Number,
 				default:1,
@@ -53,16 +62,22 @@
 				primaryRange: 0,
 				
 				primaryScrollY: 0,
-				secondScrollY: 0,
+				// secondScrollY: 0,
 				
 				primaryAtTop: true,
 				primaryAtBottom: false,
 				
 				currentSwiperItem: 0,
+				
+				itemScrollY: [],
 			}
 		},
 		mounted(){
 			this.primaryRange = this.$refs.head.$el.offsetHeight+this.$refs.content.$el.offsetHeight - this.primaryH;
+			//根据swiperitem数目初始化各自滚动距离
+			for(let i=0; i<this.swiperCount; i++){
+				this.itemScrollY.push(0);
+			}
 		},
 		computed:{
 			primaryStyle(){
@@ -80,6 +95,16 @@
 					height: this.secondH + 'px',
 				}
 			},
+			backTopShow() {
+				return this.itemScrollY[this.currentSwiperItem] > window.innerHeight*1.3;
+			},
+			backTopStyle() {
+				return {
+					border: '1rpx solid #E1E1E1',
+					color: 'black',
+					backgroundColor: 'white'
+				}
+			},
 		},
 		methods: {
 			primaryTouchTop(){
@@ -94,8 +119,9 @@
 				this.primaryScrollY = e.detail.scrollTop;
 			},
 			scrollSecond(e){
-				this.secondScrollY = e.detail.scrollTop;
-				
+				// this.secondScrollY = e.detail.scrollTop;
+				// this.itemScrollY[e.target.id] = e.detail.scrollTop;
+				this.itemScrollY.splice(e.target.id, 1, e.detail.scrollTop)
 				if(e.detail.deltaY<0){
 					if(!this.primaryAtBottom){
 						let scroll = this.primaryTop - e.detail.deltaY;
@@ -117,7 +143,10 @@
 			changeSwiper(e){
 				this.currentSwiperItem = e.detail.current;
 				this.$emit('changeSwiper', {currentSwiperItem: this.currentSwiperItem});
-			}
+			},
+			backTop() {
+				this.itemScrollY.splice(this.currentSwiperItem, 1, 0);
+			},
 		},
 		watch:{
 			customSwiperItem(val, valOld){
@@ -127,6 +156,20 @@
 	}
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.back-top{
+	position: fixed;
+	right: 40rpx;
+	bottom: 140rpx;
+	height: 80rpx;
+	width: 80rpx;
+	background-color: white;
+	border: 1rpx solid #E1E1E1;
+	border-radius: 40rpx;
+	
+	image{
+		width: 100%;
+		height: 100%;
+	}
+}
 </style>

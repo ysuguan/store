@@ -4,7 +4,7 @@
 			<yd-stack-scroll-swiper :primaryH='pageContent.contentHeight' :secondH="secondScrollHeight" :swiperCount="5" :customSwiperItem="currentTabIndex"
 			@changeSwiper="changeSwiper">
 				<template v-slot:head="primary">
-					<view>
+					<view ref="pageHead">
 						<view class="search-wrap">
 							<yd-naviSearch :opacityAlive="primary.primaryScrollY" :customWidth="pageContent.contentWidth" :top="searchOffsetTop"></yd-naviSearch>
 						</view>
@@ -13,8 +13,8 @@
 						</u-tabs>
 					</view>
 				</template>
-				<template v-slot:content1>
-					<boutique></boutique>
+				<template v-slot:content1="props">
+					<boutique :scrollInfo="props" :redundancy="pageHeadH"></boutique>
 				</template>
 				<template v-slot:content2>
 					<commodity></commodity>
@@ -50,6 +50,7 @@
 		},
 		data() {
 			return {
+				pageHeadH:0,
 				secondScrollHeight: 375,
 				
 				currentTabIndex: 0,
@@ -68,6 +69,7 @@
 		},
 		mounted() {
 			this.secondScrollHeight  = this.$refs.pageModel.contentHeight - this.$refs.tabList.$el.offsetHeight;
+			this.pageHeadH = this.$refs.pageHead.$el.offsetHeight;
 		},
 		computed:{
 		},
