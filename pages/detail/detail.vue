@@ -1,6 +1,6 @@
 <template>
 	<view class="page-wrap">
-		<scroll-view :scroll-y="true" :style="scrollH" @scroll="scrollPage">
+		<scroll-view :scroll-y="true" :style="scrollH" @scroll="scrollPage" :scroll-top="pageScrollY">
 			
 			<!-- 导航栏 -->
 			<view class="navi-bar" ref="naviBar">
@@ -123,14 +123,14 @@
 						<text class="title-text">商品介绍</text>
 					</view>
 					<view class="image-list">
-						<image src="../../static/image/commodity-detail1.png" mode="widthFix"></image>
-						<image src="../../static/image/commodity-detail2.png" mode="widthFix"></image>
+						<image src="../../static/image/commodity-detail1.png" mode="widthFix" @load="resize"></image>
+						<image src="../../static/image/commodity-detail2.png" mode="widthFix" @load="resize"></image>
 					</view>
 				</view>
 			</view>
 			
 			<!-- 推荐 -->
-			<view class="recommand" ref="recommand">
+			<view class="recommand" ref="recommand"  @tap='goDetail'>
 				<view class="title">
 					<view class="tag"></view>
 					<text class="title-text">好物推荐</text>
@@ -138,29 +138,29 @@
 				<u-waterfall v-model="recommandList" class="recommand-list">
 					<template v-slot:left="{leftList}">
 						<view v-for="(item, index) in leftList" :key="index" class="recommand-item">
-							<image class="recom-item-img"  src="../../static/image/commodity.png" mode="aspectFit"></image>
+							<image class="recom-item-img"  src="../../static/image/commodity.png" mode="aspectFit" :data-index='item.id'></image>
 							<view class="recom-item-desc">
-								<text>{{item.brand}}</text>
-								<text>{{item.type}}</text>
-								<text>{{item.desc}}</text>
+								<text :data-index='item.id'>{{item.brand}}</text>
+								<text :data-index='item.id'>{{item.type}}</text>
+								<text :data-index='item.id'>{{item.desc}}</text>
 							</view>
-							<view class="recom-item-price">
-								<u-icon name="rmb" size="12"></u-icon>
-								<text>{{item.price}}</text>
+							<view class="recom-item-price" :data-index='item.id'>
+								<u-icon name="rmb" size="12" :data-index='item.id'></u-icon>
+								<text :data-index='item.id'>{{item.price}}</text>
 							</view>
 						</view>
 					</template>
 					<template v-slot:right="{rightList}">
 						<view v-for="(item, index) in rightList" :key="index" class="recommand-item">
-							<image class="recom-item-img"  src="../../static/image/commodity.png" mode="aspectFit"></image>
+							<image class="recom-item-img"  src="../../static/image/commodity.png" mode="aspectFit" :data-index='item.id'></image>
 							<view class="recom-item-desc">
-								<text>{{item.brand}}</text>
-								<text>{{item.type}}</text>
-								<text>{{item.desc}}</text>
+								<text :data-index='item.id'>{{item.brand}}</text>
+								<text :data-index='item.id'>{{item.type}}</text>
+								<text :data-index='item.id'>{{item.desc}}</text>
 							</view>
-							<view class="recom-item-price">
-								<u-icon name="rmb" size="12"></u-icon>
-								<text>{{item.price}}</text>
+							<view class="recom-item-price" :data-index='item.id'>
+								<u-icon name="rmb" size="12" :data-index='item.id'></u-icon>
+								<text :data-index='item.id'>{{item.price}}</text>
 							</view>
 						</view>
 					</template>
@@ -187,6 +187,7 @@
 		data() {
 			return {
 				// scrollH: 667,
+				scrollTop: 0,
 				currentNaviTab: 0,
 				naviOpacityMax: 100,
 				pageScrollY:0,
@@ -194,6 +195,12 @@
 				intructionPopShow: false,
 				locationPopShow: false,
 				recommandList: [],
+				elementsRange: {
+					navi: {top: 0, bottom: 0},
+					commodity: {top: 0, bottom: 0},
+					detail: {top: 0, bottom: 0},
+					recommand: {top: 0, bottom: 0},
+				},
 				naviTabs: [
 					{name: '商品'},
 					// {name: '评价'},
@@ -205,6 +212,7 @@
 					{"image": '../../static/image/swiper2.png'},
 				],
 				commodity:{
+					"id": 33333,
 					"url": "nothing",
 					"img": '../../../static/image/commodity.png',
 					'brand':'007牌',
@@ -251,9 +259,26 @@
 			}
 		},
 		methods: {
+			goDetail(e){
+				if(e.target.dataset.index){
+					uni.navigateTo({
+						url: '/pages/detail/detail?comId='+e.target.dataset.index,
+					})
+				}
+			},
+			resize(e) {
+				this.initElementsHeight();
+			},
 			//初始化页面各模块首尾位置，方便tabbar点击跳转
 			initElementsHeight(){
-				console.log(this.$refs.naviDynamic.$el.getBoundingClientRect());
+				this.elementsRange.navi.bottom = this.$refs.naviDynamic.$el.getBoundingClientRect().bottom;
+				this.elementsRange.commodity.bottom = this.$refs.commodity.$el.getBoundingClientRect().bottom;
+				
+				this.elementsRange.detail.top = this.$refs.detail.$el.getBoundingClientRect().top - this.elementsRange.navi.bottom;
+				this.elementsRange.detail.bottom = this.$refs.detail.$el.getBoundingClientRect().bottom - this.elementsRange.navi.bottom;
+				
+				this.elementsRange.recommand.top = this.$refs.recommand.$el.getBoundingClientRect().top - this.elementsRange.navi.bottom;
+				this.elementsRange.recommand.bottom = this.$refs.recommand.$el.getBoundingClientRect().bottom - this.elementsRange.navi.bottom;
 			},
 			goBack() {
 				uni.navigateBack({});
@@ -277,6 +302,13 @@
 			},
 			scrollPage(e) {
 				this.pageScrollY = e.detail.scrollTop;
+				if(this.pageScrollY<this.elementsRange.detail.top){
+					this.currentNaviTab = 0;
+				}else if(this.pageScrollY>=this.elementsRange.detail.top&&this.pageScrollY<this.elementsRange.detail.bottom){
+					this.currentNaviTab = 1;
+				}else if(this.pageScrollY>=this.elementsRange.detail.bottom){
+					this.currentNaviTab = 2;
+				}
 			},
 			initTestData() {
 				for(let i=0; i<21; i++){
@@ -285,6 +317,14 @@
 			},
 			changeNavi(e) {
 				this.currentNaviTab = e;
+				if(e==0){
+					this.pageScrollY = this.elementsRange.commodity.top;
+				}else if(e==1){
+					this.pageScrollY = this.elementsRange.detail.top;
+				}else{
+					this.pageScrollY = this.elementsRange.recommand.top;
+				}
+				console.log(this.pageScrollY);
 			}
 		}
 	}
