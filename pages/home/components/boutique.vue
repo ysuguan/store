@@ -1,10 +1,10 @@
 <template>
 	<view>
 		<u-swiper :list="swiperList" height="400"></u-swiper>
-		<view class="recommand-box">
-			<view class="recommand-item" v-for="item in 10" :key="item+'recommand'">
-				<image class="recommand-img" :src="recommandList[0].image" mode="aspectFill"></image>
-				<view class="recommand-text">{{recommandList[0].text}}</view>
+		<view class="recommand-box" @tap="clickRecommand" ref="recomBox">
+			<view class="recommand-item" v-for="(item, index) in recommandList" :key="item.text" :data-index="index">
+				<image class="recommand-img" :src="item.image" mode="aspectFill" :data-index="index"></image>
+				<view class="recommand-text" :data-index="index">{{item.text}}</view>
 			</view>
 		</view>
 		
@@ -20,21 +20,62 @@
 			<view class="more-title">
 				更多值得买
 			</view>
-			<view class="more-box">
-				<view class="more-tabs"  @tap="clickMoreTab($event, 0)">
-					<view class="more-tab-item" v-for="(item, index) in moreCateList[0]" :key='item' :id="index">{{item}}</view>
+			<view class="more-box" ref="moreBox1">
+				<view class="more-tabs-wrap" :class="{'more-tabs-wrap-fixed': moreTabFixed[0]}">
+					<view class="more-tabs"  @tap="clickMoreTab($event, 0)" ref="moreTabs1">
+						<view class="more-tab-item" :class="{'more-tab-item-a': currentMoreTab1==index}" v-for="(item, index) in moreCateList[0]" 
+						:key='item' :data-index="index">{{item}}</view>
+					</view>
 				</view>
 				<view class="more-list">
-					
+					<view class="more-list-item" v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])">
+						<view class="more-list-item-img">
+							<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
+						</view>
+						<view class="more-list-item-desc">
+							<text>{{item.brand}}</text>
+							<text>{{item.type}}</text>
+							<text>{{item.name}}</text>
+							<text>{{item.specificans}}</text>
+							<text>{{item.desc}}</text>
+						</view>
+						<view class="more-list-item-price">
+							<u-icon name="rmb" size="12"></u-icon>
+							{{item.price}}
+						</view>
+					</view>
 				</view>
 			</view>
-			<view class="more-box">
-				
+			<view class="more-box" ref="moreBox2">
+				<view class="more-tabs-wrap" :class="{'more-tabs-wrap-fixed': moreTabFixed[1]}">
+					<view class="more-tabs"  @tap="clickMoreTab($event, 1)" ref="moreTabs2">
+						<view class="more-tab-item" :class="{'more-tab-item-a': currentMoreTab2==index}" v-for="(item, index) in moreCateList[1]" 
+						:key='item' :data-index="index">{{item}}</view>
+					</view>
+				</view>
+				<view class="more-list">
+					<view class="more-list-item" v-for="item in moreComMap.get(moreCateList[1][currentMoreTab2])">
+						<view class="more-list-item-img">
+							<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
+						</view>
+						<view class="more-list-item-desc">
+							<text>{{item.brand}}</text>
+							<text>{{item.type}}</text>
+							<text>{{item.name}}</text>
+							<text>{{item.specificans}}</text>
+							<text>{{item.desc}}</text>
+						</view>
+						<view class="more-list-item-price">
+							<u-icon name="rmb" size="12"></u-icon>
+							{{item.price}}
+						</view>
+					</view>
+				</view>
 			</view>
 		</view>
 		
 		<view class="bouti-com-list-wrap" ref="boutiComList" :class="{'bouti-com-list-wrap-a':tabFixed}">
-			<u-grid :col="4" class='com-list-tabs' :border="false" >
+			<u-grid :col="4" class='com-list-tabs' :border="false" hoverClass="none">
 				<u-grid-item class="com-list-tabs-item" :class="{'com-list-tabs-item-a': currentComTab==0}" @tap='comListTabClick(0)'>推荐</u-grid-item>
 				<u-grid-item class="com-list-tabs-item" :class="{'com-list-tabs-item-a': currentComTab==1}" @tap='comListTabClick(1)'>销量</u-grid-item>
 				<u-grid-item class="com-list-tabs-item" :class="{'com-list-tabs-item-a': currentComTab==2}" @tap='comListTabClick(2)'>新品</u-grid-item>
@@ -97,8 +138,11 @@
 				ascending: false,
 				tabOffTop:0,
 				tabFixed: false,
+				moreTabFixed: [false, false],
+				moreTabRange: [{top: 0, bottom: 0},{top: 0, bottom: 0}],
 				currentMoreTab1: 0,
 				currentMoreTab2: 0,
+				moreComMap: null,
 				moreCateList: [
 					['维钙营养', '补益用药', '过敏克星', '脱发白发',],
 					['心脑血管', '神经系统', '肝胆用药', '消化系统',],
@@ -110,7 +154,43 @@
 				recommandList:[
 					{
 						"image": "../../static/image/recommand-icon.png",
+						"text": "维钙营养",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "补益用药",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "肠胃消化",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
 						"text": "皮肤用药",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "男性健康",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "五官用药",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "肝胆用药",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "呼吸系统",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "心脑血管",
+					},
+					{
+						"image": "../../static/image/recommand-icon.png",
+						"text": "神经用药",
 					},
 				],
 				commodity:{
@@ -126,9 +206,21 @@
 				},
 			}
 		},
+		created() {
+			this.initTestData();
+			
+		},
 		mounted() {
+			//获取商品列表tabbar顶部
 			let info = this.$refs.boutiComList.$el.getBoundingClientRect()
 			this.tabOffTop = info.top;
+			
+			//获取更多推荐模块(more)两个子框的顶部和底部
+			let moreTabH = this.$refs.moreTabs1.$el.offsetHeight;
+			info = this.$refs.moreBox1.$el.getBoundingClientRect();
+			this.moreTabRange.splice(0, 1, Object.assign({}, {top: info.top, bottom: info.bottom-moreTabH}));
+			info = this.$refs.moreBox2.$el.getBoundingClientRect();
+			this.moreTabRange.splice(1, 1, Object.assign({}, {top: info.top, bottom: info.bottom-moreTabH}));
 		},
 		computed: {
 			comList1(){
@@ -154,6 +246,25 @@
 			},
 		},
 		methods: {
+			initTestData() {
+				//初始化测试数据
+				this.moreComMap = new Map();
+				for(let item of ['维钙营养', '补益用药', '过敏克星', '脱发白发','心脑血管', '神经系统', '肝胆用药', '消化系统',]){
+					let tmp = []
+					for(let i=0; i<6; i++){
+						let obj = Object.assign({}, this.commodity);
+						obj.brand = item;
+						tmp.push(obj);
+					}
+					this.moreComMap.set(item, tmp);
+				}
+			},
+			clickRecommand(e) {
+				uni.navigateTo({
+					url: '/pages/search/search?text='+this.recommandList[e.target.dataset.index].text,
+				});
+				
+			},
 			comListTabClick(index) {
 				if(this.currentComTab==3&&index==3){
 					this.ascending = !this.ascending;
@@ -163,20 +274,37 @@
 			},
 			clickMoreTab(e, moreListIndex){
 				if(moreListIndex==0){
-					console.log(e);
+					this.currentMoreTab1 = e.target.dataset.index;
+				}else{
+					this.currentMoreTab2 = e.target.dataset.index;
 				}
-			}
-			
-		},
-		watch: {
-			//二级滚动窗的位置
-			scrollInfo(val) {
-				// console.log(val.secondScrollY, this.tabOffTop, this.redundancy);
+			},
+			//商品列表动态吸顶
+			isComListTabFixed(val) {
 				if(val.secondScrollY+this.redundancy>=this.tabOffTop&&!this.tabFixed){
 					this.tabFixed = true;
 				}else if(val.secondScrollY+this.redundancy<this.tabOffTop&&this.tabFixed){
 					this.tabFixed = false;
 				}
+			},
+			isMoreTabFixed(val) {
+				if((val.secondScrollY+this.redundancy>=this.moreTabRange[0].top)&&(val.secondScrollY+this.redundancy<this.moreTabRange[0].bottom)){
+					this.moreTabFixed.splice(0, 1, true);
+				}else if((val.secondScrollY+this.redundancy<this.moreTabRange[0].top)||(val.secondScrollY+this.redundancy>=this.moreTabRange[0].bottom)){
+					this.moreTabFixed.splice(0, 1, false);
+				}
+				if((val.secondScrollY+this.redundancy>=this.moreTabRange[1].top)&&(val.secondScrollY+this.redundancy<this.moreTabRange[1].bottom)){
+					this.moreTabFixed.splice(1, 1, true);
+				}else if((val.secondScrollY+this.redundancy<this.moreTabRange[1].top)||(val.secondScrollY+this.redundancy>=this.moreTabRange[1].bottom)){
+					this.moreTabFixed.splice(1, 1, false);
+				}
+			}
+		},
+		watch: {
+			//二级滚动窗的位置
+			scrollInfo(val) {
+				this.isComListTabFixed(val);
+				this.isMoreTabFixed(val);
 			}
 		}
 	}
@@ -186,7 +314,7 @@
 .recommand-box{
 	display: flex;
 	flex-wrap: wrap;
-	height: 400rpx;
+	height: 300rpx;
 	width: 100%;
 	justify-content: space-around;
 	padding: 10rpx 0;
@@ -194,7 +322,7 @@
 	background-color: white;
 	.recommand-item{
 		width: 18%;
-		height: 120rpx;
+		height: 150rpx;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
@@ -202,8 +330,7 @@
 		.recommand-img{
 			width: 100rpx;
 			height: 100rpx;
-			border-radius: 30rpx;
-			margin-bottom: 10rpx;
+			border-radius: 40rpx;
 		}
 		
 		.recommand-text{
@@ -213,7 +340,7 @@
 }
 
 .bouti-com-list-wrap{
-	margin-top: 15rpx;
+	// margin-top: 15rpx;
 	background-color: $page-bgc;
 
 	.com-list-tabs{
@@ -303,7 +430,7 @@
 
 .more{
 	background-color: white;
-	
+	margin-bottom: 20rpx;
 	.more-title{
 		color: green;
 		font-weight: bolder;
@@ -313,21 +440,72 @@
 		margin-bottom: 20rpx;
 	}
 	.more-box{
-		.more-tabs{
-			display: flex;
-			justify-content: space-between;
-			margin:0 20rpx;
+		.more-tabs-wrap{
 			
-			.more-tab-item{
-				padding: 10rpx 0;
-				color: black;
-				font-weight: 400;
+			.more-tabs{
+				display: flex;
+				justify-content: space-between;
+				height: 60rpx;
+				width: 100%;
+				padding: 0 20rpx;
+				background-color: white;
+				
+				.more-tab-item{
+					padding: 10rpx 0;
+					color: black;
+					font-weight: 400;
+				}
+				
+				.more-tab-item-a{
+					color: $basic-color;
+					font-weight: bolder;
+					border-bottom: 2rpx solid $basic-color;
+				}
 			}
-			
-			.more-tab-item-a{
-				color: $basic-color;
-				font-weight: bolder;
-				border-bottom: 2rpx solid $basic-color;
+		}
+		.more-tabs-wrap-fixed{
+			&::before{
+				content: '';
+				display: block;
+				height: 60rpx;
+				width: 100%;
+			}
+			.more-tabs{
+				position: fixed;
+				z-index: 999;
+				top: 0;
+			}
+		}
+		
+		.more-list{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			.more-list-item{
+				width: 230rpx;
+				height: 340rpx;
+				padding-bottom: 10rpx;
+				.more-list-item-img{
+					width: 220rpx;
+					height: 220rpx;
+					image{
+						width: 100%;
+						height: 100%;
+						border-radius: 10rpx;
+					}
+				}
+				.more-list-item-desc{
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp:2;
+					overflow: hidden;
+					white-space:pre-wrap;
+				}
+				.more-list-item-price{
+					color: red;
+					font-size: 30rpx;
+				}
 			}
 		}
 	}

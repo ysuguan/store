@@ -47,7 +47,7 @@
 					</scroll-view>
 				</view>
 				<view class="foot">
-					<u-button type="error" shape="circle" :customStyle="btnConfimStyle" @tap="addCart">确定</u-button>
+					<u-button type="error" shape="circle" :customStyle="btnConfirmStyle" @tap="addCart">确定</u-button>
 				</view>
 				<u-mask :show="maskShow" :customStyle="maskStyle">
 					<view class="loading">
@@ -101,7 +101,7 @@
 			};
 		},
 		computed: {
-			btnConfimStyle() {
+			btnConfirmStyle() {
 				return {
 					height: '70rpx',
 					background: 'linear-gradient(to right, #FC3C2D, #FF9933)',
