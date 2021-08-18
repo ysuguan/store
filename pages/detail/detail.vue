@@ -17,7 +17,7 @@
 			<!-- 商品 -->
 			<view class="commodity" ref="commodity">
 				<view class="swiper">
-					<u-swiper :list="swiperList" height='600' :autoplay="false" mode="number"></u-swiper>
+					<u-swiper :list="swiperList" height='600' :autoplay="false" mode="number" indicatorPos="bottomRight"></u-swiper>
 				</view>
 				<view class="intro">
 					<view class="price">
@@ -167,22 +167,38 @@
 				</u-waterfall>
 			</view>
 		</scroll-view>
+		<view class="tabbar">
+			<view class="cart-info" @tap="goCart">
+				<view class="cart-icon">
+					<u-badge count="7" size="mini" type="error" :absolute="true" :offset="[-5, -10]" bgColor="white" color="red"></u-badge>
+				</view>
+				<view class="cart-text">购物车</view>
+			</view>
+			<view class="tabbar-btn">
+				<view class="add-to-cart" @tap="showSelect">加入购物车</view>
+				<view class="buy-now" @tap="buyNow">立即购买</view>
+			</view>
+		</view>
 		<yd-select-popup :comShow="selectPopShow"  @addCart="changeType"></yd-select-popup>
 		<intruction-pop :comShow="intructionPopShow" @popClose="showIntructions(false)"></intruction-pop>
-		<location-pop :comShow="locationPopShow" :address="$store.state.userInfo.address" 
-		@popClose="showLocationPop(false)" @changeLocation="changeLocation"></location-pop>
+		<yd-location-pop :comShow="locationPopShow" :address="$store.state.userInfo.address" 
+		@popClose="showLocationPop(false)" @changeLocation="changeLocation"></yd-location-pop>
+		<buy-now-pop :comShow="buyNowPopShow" @popClose='buyNowClose'></buy-now-pop>
 	</view>
 </template>
 
 <script>
 	import intructionPop from "./components/intructionPop.vue"
-	import locationPop from "./components/locationPop.vue"
+	// import locationPop from "./components/locationPop.vue"
+	import buyNowPop from "./components/buyNowPop.vue"
+	import {titleReset} from "../../common/mixin.js"
 	
 	export default {
-		name: 'detail',
+		mixins:[titleReset],
 		components:{
 			'intruction-pop': intructionPop,
-			'location-pop': locationPop,
+			// 'location-pop': locationPop,
+			'buy-now-pop': buyNowPop,
 		},
 		data() {
 			return {
@@ -194,6 +210,7 @@
 				selectPopShow: false,
 				intructionPopShow: false,
 				locationPopShow: false,
+				buyNowPopShow: false,
 				recommandList: [],
 				elementsRange: {
 					navi: {top: 0, bottom: 0},
@@ -239,6 +256,8 @@
 			this.initTestData();
 		},
 		mounted() {
+			document.title = '大药房';
+			
 			this.initElementsHeight();
 		},
 		computed:{
@@ -259,6 +278,17 @@
 			}
 		},
 		methods: {
+			buyNowClose() {
+				this.buyNowPopShow = false;
+			},
+			buyNow() {
+				this.buyNowPopShow = true;
+			},
+			goCart() {
+				uni.switchTab({
+					url: '/pages/cart/cart',
+				})
+			},
 			goDetail(e){
 				if(e.target.dataset.index){
 					uni.navigateTo({
@@ -269,7 +299,7 @@
 			resize(e) {
 				this.initElementsHeight();
 			},
-			//初始化页面各模块首尾位置，方便tabbar点击跳转
+			//初始化页面各模块首尾位置，方便navibar点击跳转
 			initElementsHeight(){
 				this.elementsRange.navi.bottom = this.$refs.naviDynamic.$el.getBoundingClientRect().bottom;
 				this.elementsRange.commodity.bottom = this.$refs.commodity.$el.getBoundingClientRect().bottom;
@@ -347,6 +377,66 @@ $table-bgc: #E4E7ED;
 	margin-left: 20rpx;
 }
 
+.tabbar{
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	background-color: white;
+	height: $tabbarHeight;
+	width: 100%;
+	.cart-info{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: 20rpx;
+		flex-wrap: wrap;
+		width: 80rpx;
+		height: $tabbarHeight;
+		.cart-icon{
+			position: relative;
+			height: 50rpx;
+			width: 50rpx;
+			background-image: url(../../static/image/cart-detail.svg);
+			background-size: cover;
+			margin-bottom: 5rpx;
+			/deep/.u-badge{
+				border: 1rpx solid red;
+			}
+		}
+		.cart-text{
+			font-size: 20rpx;
+		}
+	}
+	.tabbar-btn{
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		width: 450rpx;
+		height: $tabbarHeight;
+		font-size: 28rpx;
+		font-weight: bold;
+		color: white;
+		
+		.add-to-cart{
+			width: 220rpx;
+			height: 80rpx;
+			border-radius: 40rpx;
+			text-align: center;
+			line-height: 80rpx;
+			background: linear-gradient(to right, red, red 30%, $linear-color-end);
+		}
+		.buy-now{
+			width: 200rpx;
+			height: 80rpx;
+			border-radius: 40rpx;
+			text-align: center;
+			line-height: 80rpx;
+			background: linear-gradient(to right, orange, orange 30%, #FFCC6B);
+		}
+	}
+}
+
 .navi-bar{
 	.navi-init{
 		position: fixed;
@@ -384,13 +474,6 @@ $table-bgc: #E4E7ED;
 }
 
 .commodity{
-	.swiper{
-		//数字指示器靠右
-		/deep/.u-indicator-item-number{
-			margin-left: auto;
-		}
-	}
-	
 	.intro{
 		padding: 20rpx 20rpx 10rpx 20rpx;
 		background-color: white;

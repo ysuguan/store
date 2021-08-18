@@ -43,7 +43,7 @@
 
 <script>
 	export default {
-		name: "intructionPop",
+		name: "yd-location-pop",
 		props: {
 			comShow: {
 				type: Boolean,

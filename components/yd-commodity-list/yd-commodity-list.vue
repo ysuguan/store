@@ -1,6 +1,6 @@
 <template>
 	<view ref="list" class="list-wrap">
-		<view class="list-item" v-for="item in list[0]">
+		<view class="list-item" v-for="(item, index) in list[0]">
 			<yd-commodity-dynamic :mode="itemMode" :height="itemHeight" :width="itemWidth"></yd-commodity-dynamic>
 		</view>
 	</view>
@@ -48,7 +48,7 @@
 			//获取rpx单位的列表宽度，用于向item传参
 			getListRpx() {
 				this.listWidth = (this.$refs.list.$el.offsetWidth/document.documentElement.clientWidth)*750;
-			}
+			},
 		},
 	}
 </script>

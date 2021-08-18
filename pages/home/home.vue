@@ -39,8 +39,10 @@
 	import promotion from "./components/promotion"
 	import collocation from "./components/collocation"
 	import boutique from "./components/boutique"
+	import {titleReset} from "../../common/mixin.js"
 	
 	export default {
+		mixins:[titleReset],
 		components:{
 			seckill,
 			commodity,
@@ -68,6 +70,8 @@
 			}
 		},
 		mounted() {
+			document.title = '大药房';
+			
 			this.secondScrollHeight  = this.$refs.pageModel.contentHeight - this.$refs.tabList.$el.offsetHeight;
 			this.pageHeadH = this.$refs.pageHead.$el.offsetHeight;
 		},

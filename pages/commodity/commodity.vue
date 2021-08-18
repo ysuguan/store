@@ -29,8 +29,10 @@
 </template>
 
 <script>
+	import {titleReset} from "../../common/mixin.js"
+	
 	export default {
-		name: "commodity",
+		mixins:[titleReset],
 		data() {
 			return {
 				currentTab: 0,
@@ -43,6 +45,8 @@
 			}
 		},
 		mounted(){
+			document.title = '大药房';
+			
 			this.secondScrollHeight = this.$refs.pageModel.contentHeight - this.$refs.tabList.$el.offsetHeight;
 		},
 		computed: {

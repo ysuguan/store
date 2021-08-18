@@ -28,7 +28,7 @@
 					</view>
 				</view>
 				<view class="more-list">
-					<view class="more-list-item" v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])">
+					<!-- <view class="more-list-item" v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])">
 						<view class="more-list-item-img">
 							<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
 						</view>
@@ -43,7 +43,12 @@
 							<u-icon name="rmb" size="12"></u-icon>
 							{{item.price}}
 						</view>
-					</view>
+					</view> -->
+					<yd-commodity-dynamic v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])" :mini="true" height="350" width="220" :commodity="item">
+						<template v-slot:bottom>
+							<view></view>
+						</template>
+					</yd-commodity-dynamic>
 				</view>
 			</view>
 			<view class="more-box" ref="moreBox2">
@@ -54,7 +59,7 @@
 					</view>
 				</view>
 				<view class="more-list">
-					<view class="more-list-item" v-for="item in moreComMap.get(moreCateList[1][currentMoreTab2])">
+					<!-- <view class="more-list-item" v-for="item in moreComMap.get(moreCateList[1][currentMoreTab2])">
 						<view class="more-list-item-img">
 							<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
 						</view>
@@ -69,7 +74,12 @@
 							<u-icon name="rmb" size="12"></u-icon>
 							{{item.price}}
 						</view>
-					</view>
+					</view> -->
+					<yd-commodity-dynamic v-for="item in moreComMap.get(moreCateList[1][currentMoreTab2])" :mini="true" height="350" width="220" :commodity="item">
+						<template v-slot:bottom>
+							<view></view>
+						</template>
+					</yd-commodity-dynamic>
 				</view>
 			</view>
 		</view>
@@ -91,7 +101,7 @@
 			</u-grid>
 				
 			<view class="bouti-com-list">
-				<view class="bouti-com-item" v-for="item in 30">
+				<view class="bouti-com-item" v-for="item in 30" @tap="goDetail">
 					<view class="bouti-com-item-image">
 						<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
 					</view>
@@ -258,6 +268,11 @@
 					}
 					this.moreComMap.set(item, tmp);
 				}
+			},
+			goDetail() {
+				uni.navigateTo({
+					url: "/pages/detail/detail?comId="+333,
+				})
 			},
 			clickRecommand(e) {
 				uni.navigateTo({

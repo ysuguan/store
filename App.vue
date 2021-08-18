@@ -5,7 +5,6 @@
 		},
 		onShow: function() {
 			console.log('App Show')
-			document.title = '大药房';
 		},
 		onHide: function() {
 			console.log('App Hide')

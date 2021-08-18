@@ -124,9 +124,10 @@
 
 <script>
 	import Vue from 'vue'
+	import {titleReset} from "../../common/mixin.js"
 	
 	export default {
-		name: 'cart',
+		mixins:[titleReset],
 		data() {
 			return {
 				primaryScrollH: 375,
@@ -149,6 +150,7 @@
 						price: 199,
 						number: 3,
 						type: '丁型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -158,6 +160,7 @@
 						price: 199,
 						number: 3,
 						type: '丙型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -167,6 +170,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -176,6 +180,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -185,6 +190,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -194,6 +200,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -203,6 +210,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},
 				],
@@ -215,6 +223,7 @@
 						price: 199,
 						number: 3,
 						type: '乙型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -224,6 +233,7 @@
 						price: 199,
 						number: 3,
 						type: '丙型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -233,6 +243,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -242,6 +253,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -251,6 +263,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -260,6 +273,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},{
 						id:2333,
@@ -269,6 +283,7 @@
 						price: 199,
 						number: 3,
 						type: '甲型',
+						weight: 0.12,
 						specifications: '【70g*30袋】国产高端',
 					},
 				],
@@ -332,7 +347,13 @@
 		},
 		methods: {
 			placeOrder() {
-				console.log('买单！');
+				let orderList = this.cartsAll.filter(item => {
+					return item.checked;
+				})
+				this.$store.commit('setReadyOrder', orderList);
+				uni.navigateTo({
+					url: "/pages/newOrder/newOrder",
+				})
 			},
 			edit() {
 				this.statusEdit = !this.statusEdit;

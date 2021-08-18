@@ -38,9 +38,10 @@
 
 <script>
 	import {trim} from "../../common/utils/index.js";
+	import {titleReset} from "../../common/mixin.js"
 	
 	export default {
-		name:'search',
+		mixins:[titleReset],
 		data() {
 			return {
 				scrollHeight: 375,
@@ -84,6 +85,7 @@
 			}
 		},
 		mounted(){
+			document.title = '大药房';
 			//必须将页面高度设置为与滚动窗口一致，避免出现原生滚动
 			this.$refs.pageWrap.$el.style.height = this.scrollHeight+'px';
 		},

@@ -114,7 +114,10 @@
 </template>
 
 <script>
+	import {titleReset} from "../../common/mixin.js"
+	
 	export default {
+		mixins:[titleReset],
 		data() {
 			return {
 				selectPopShow: false,
@@ -122,6 +125,7 @@
 			}
 		},
 		mounted() {
+			document.title = '大药房';
 			
 		},
 		computed:{

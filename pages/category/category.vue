@@ -36,7 +36,10 @@
 </template>
 
 <script>
+	import {titleReset} from "../../common/mixin.js"
+	
 	export default {
+		mixins: [titleReset],
 		data() {
 			return {
 				secondScrollHeight: 375,
@@ -79,7 +82,7 @@
 				},
 			}
 		},
-		mounted() {
+		mounted() {		
 			this.secondScrollHeight  = this.$refs.pageModel.contentHeight;
 		},
 		computed:{

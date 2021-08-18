@@ -1,5 +1,5 @@
 <template>
-	<view class="com-wrap" :class="dynamicClass[mode]" :style="dynamicStyle">
+	<view class="com-wrap" :class="dynamicClass[mode]" :style="dynamicStyle" @tap="goDetail">
 		<view class="com-image">
 			<image :src="imgSrc" mode="scaleToFill"></image>
 		</view>
@@ -7,10 +7,10 @@
 			<view class="up-side">
 				<view class="title" :style="setMiniStyle('titleFS')">
 					<u-tag v-if="!mini" class="tag" text="热销" shape="circle" :show="true" color="white" bgColor="red"></u-tag>
-					<text class="brand">品牌</text>
-					<text class="name">名字</text>
-					<text class="specs">规格</text>
-					<text class="effect">功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效功效</text>
+					<text class="brand">{{commodity.brand}}</text>
+					<text class="name">{{commodity.name}}</text>
+					<text class="specs">{{commodity.specificans}}</text>
+					<text class="effect">{{commodity.desc}}</text>
 				</view>
 			</view>
 			<view class="down-side">
@@ -74,6 +74,22 @@
 			imgSrc: {
 				type: String,
 				default: '../../static/image/commodity.png',
+			},
+			commodity: {
+				type: Object,
+				default: () => {
+					return {
+					"url": "nothing",
+					"img": '../../../static/image/commodity.png',
+					"text": "香雪抗病毒口服液18支风热感冒药流感咳嗽发热口液流鼻涕清热去痰",
+					'brand':'007牌',
+					"type": '甲乙丙',
+					"name": '抗病毒口服液',
+					"specificans": '18支',
+					"desc": '风热感冒药流感咳嗽发热口液流鼻涕清热去痰',
+					"price": 225,
+					}
+				}
 			}
 		},
 		data() {
@@ -102,6 +118,11 @@
 			}
 		},
 		methods:{
+			goDetail() {
+				uni.navigateTo({
+					url: '/pages/detail/detail',
+				})
+			},
 			setMiniStyle(tag){
 				if(!this.mini){
 					return {};

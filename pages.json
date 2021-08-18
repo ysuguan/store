@@ -91,6 +91,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/newOrder/newOrder",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
