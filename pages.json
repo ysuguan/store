@@ -65,7 +65,7 @@
             
         }
         ,{
-            "path" : "pages/orderlist/orderlist",
+            "path" : "pages/orderList/orderList",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -74,7 +74,7 @@
             
         }
         ,{
-            "path" : "pages/orderdetail/orderdetail",
+            "path" : "pages/orderDetail/orderDetail",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -93,6 +93,33 @@
         }
         ,{
             "path" : "pages/newOrder/newOrder",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/orderSearch/orderSearch",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/addressList/addressList",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/addressModify/addressModify",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",

@@ -15,4 +15,80 @@ export default {
 		},
 	},
 	readyOrder: [],
+	orderList: [
+		{
+			status: '已完成',
+			comList: [
+				{
+					brand: "888牌",
+					desc: "外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药",
+					id: 2333,
+					name: "感冒灵颗粒",
+					numMax: 5,
+					numMin: 1,
+					number: 3,
+					price: 199,
+					specifications: "【70g*30袋】国产高端",
+					type: "乙型",
+					weight: 0.12,
+					status: '已完成',
+				},{
+					brand: "777牌",
+					desc: "外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药",
+					id: 2333,
+					name: "感冒灵颗粒",
+					numMax: 5,
+					numMin: 1,
+					number: 3,
+					price: 199,
+					specifications: "【70g*30袋】国产高端",
+					type: "丙型",
+					weight: 0.12,
+				},{
+					brand: "777牌",
+					desc: "外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药",
+					id: 2333,
+					name: "感冒灵颗粒",
+					numMax: 5,
+					numMin: 1,
+					number: 3,
+					price: 199,
+					specifications: "【70g*30袋】国产高端",
+					type: "丙型",
+					weight: 0.12,
+				},{
+					brand: "777牌",
+					desc: "外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药",
+					id: 2333,
+					name: "感冒灵颗粒",
+					numMax: 5,
+					numMin: 1,
+					number: 3,
+					price: 199,
+					specifications: "【70g*30袋】国产高端",
+					type: "丙型",
+					weight: 0.12,
+				}
+			]
+		},
+		{
+			status: '已完成',
+			comList: [
+				{
+					brand: "888牌",
+					desc: "外治刀伤内愈隐患跌打损伤体虚气弱均可对症实乃居家旅行之必备良药",
+					id: 2333,
+					name: "感冒灵颗粒",
+					numMax: 5,
+					numMin: 1,
+					number: 3,
+					price: 199,
+					specifications: "【70g*30袋】国产高端",
+					type: "乙型",
+					weight: 0.12,
+					status: '已完成',
+				}
+			]
+		},
+	],
 }

@@ -133,6 +133,7 @@
 		},
 		mounted() {
 			this.scrollHeight = window.innerHeight - this.$refs.navi.$el.offsetHeight - this.$refs.bottom.$el.offsetHeight;
+			console.log(this.$store.state.readyOrder);
 		},
 		computed: {
 			scrollStyle() {
