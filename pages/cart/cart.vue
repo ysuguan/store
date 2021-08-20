@@ -542,7 +542,7 @@
 			
 			.text{
 				width: 250rpx;
-				font-size: 20rpx;
+				font-size: 25rpx;
 				text-overflow: ellipsis;
 				overflow: hidden;
 				white-space: nowrap;

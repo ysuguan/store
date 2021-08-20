@@ -28,7 +28,7 @@
 			//自定义的组件宽度,单位px
 			customWidth: {
 				type: Number,
-				default: 0
+				default: 1
 			},
 			//组件固定高度，单位rpx
 			top: {
@@ -48,6 +48,7 @@
 			if(this.opacityMax!=0){
 				this.opacityMax -= this.bounce;
 			}
+			console.log(this.customWidth);
 		},
 		computed:{
 			//动态样式

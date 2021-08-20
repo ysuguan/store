@@ -5,6 +5,7 @@
 			<view class="navi-text">我的</view>
 		</view>
 		<view class="content">
+			
 			<view class="head">
 				<image class="head-logo" src="../../static/image/profile.png" mode="aspectFit"></image>
 				<view class="head-desc">
@@ -189,6 +190,7 @@
 
 <style lang="scss" scoped>
 .page{
+	position: relative;
 	background-color: $page-bgc;
 	height: calc(100vh - 50px);
 	overflow: hidden;
@@ -215,12 +217,18 @@
 	}
 }
 
+
+
 .content{
 	padding: 0 20rpx;
+	z-index: 100;
 	.head{
 		display: flex;
-		height: 100rpx;
-		margin-top: 50rpx;
+		height: 200rpx;
+		padding-top: 50rpx;
+		background: linear-gradient(to right, $page-bgc, transparent 40%),
+					linear-gradient(to left, $page-bgc, transparent 40%),
+					linear-gradient(to top, transparent, transparent 20%, rgba(250,8,1, 0.1));
 		.head-logo{
 			height: 100rpx;
 			width: 100rpx;

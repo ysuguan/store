@@ -99,9 +99,9 @@
 					vertical: 'com-wrap-v'
 				},
 				miniSize: {
-					titleFS: 7,
-					priceLogoFS: 7,
-					priceFS:3,
+					titleFS: 25,
+					priceLogoFS: 20,
+					priceFS:30,
 				},
 			};
 		},
@@ -137,7 +137,7 @@
 
 <style lang="scss" scoped>
 $title-font-size: 15rpx;
-$not-title-font-size: 5rpx;	
+$not-title-font-size: 20rpx;	
 $price-logo-size: 20rpx;
 $price-font-size: 30rpx;
 $price-now-color: red;
@@ -148,7 +148,7 @@ $comments-color: #606266;
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;
-	height: 200rpx;
+	height: 240rpx;
 	
 	.com-image{
 		width: 35%;
@@ -165,7 +165,8 @@ $comments-color: #606266;
 	display: flex;
 	flex-wrap: wrap;
 	justify-items: center;
-	height:500rpx;
+	height:520rpx;
+	padding-bottom: 10rpx;
 	.com-image{
 		width: 100%;
 		height: 55%;
@@ -203,7 +204,7 @@ $comments-color: #606266;
 				-webkit-line-clamp:2;
 				overflow: hidden;
 				white-space:pre-wrap;
-				line-height: $title-font-size*2;
+				// line-height: $title-font-size*2;
 				.tag{
 					font-size: $not-title-font-size;
 					padding: 6rpx;

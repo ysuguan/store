@@ -526,7 +526,7 @@ $table-bgc: #E4E7ED;
 			}
 			.down{
 				padding: 0 15rpx;
-				font-size: 15rpx;
+				font-size: 22rpx;
 				color: gray;
 				text-overflow: ellipsis;
 				display: -webkit-box;

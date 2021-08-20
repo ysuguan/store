@@ -5,7 +5,7 @@
 				<view class="seckill-commodity-box" >
 					<yd-commodity-dynamic mode="horizontal" v-for="item in 2">
 						<template v-slot:bottom>
-							<view style="height: 30rpx ;font-size: 15rpx;color: #82848A;"> <del>500</del> </view>
+							<view style="height: 30rpx ;font-size: 25rpx;color: #82848A;"> <del>500</del> </view>
 						</template>
 						<template v-slot:customButton>
 							<view class="seckill-btn">
@@ -23,7 +23,7 @@
 				<view class="seckill-list-item" v-for="item in 12">
 					<yd-commodity-dynamic mode="vertical">
 						<template v-slot:bottom>
-							<view style="height: 30rpx ;font-size: 15rpx;color: #82848A;"> <del>500</del> </view>
+							<view style="height: 30rpx ;font-size: 25rpx;color: #82848A;"> <del>500</del> </view>
 						</template>
 						<template v-slot:customButton>
 							<view class="seckill-btn">
@@ -50,7 +50,7 @@
 					timeStamp: 86400,
 					color: 'white',
 					bgColor: 'transparent',
-					fontSize: 15,
+					fontSize: 25,
 					showBorder: false,
 					height: 15,
 					separatorColor: 'white',
@@ -81,7 +81,7 @@
 			display: flex;
 			flex-wrap: wrap;
 			align-content: space-between;
-			height: 450rpx;
+			height: 480rpx;
 			background-color: white;
 			border-radius: 10rpx;
 			
@@ -94,7 +94,7 @@
 		justify-content: space-between;
 		.seckill-list-item{
 			width: 49%;
-			height: 500rpx;
+			height: 530rpx;
 			margin-bottom: 5rpx;
 		}
 	}
@@ -108,7 +108,7 @@
 		
 		height: 80rpx;
 		width: 120rpx;
-		font-size: 10rpx;
+		font-size: 28rpx;
 		border-radius: 10rpx;
 		
 		margin-bottom: 5rpx;

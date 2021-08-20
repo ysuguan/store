@@ -157,7 +157,7 @@ $linear-color-end: #FF9933;
 .content{
 	position: relative;
 	padding: 20rpx;
-	height: 1200rpx;
+	height: 1000rpx;
 	
 	.loading{
 		position: absolute;
@@ -205,7 +205,7 @@ $linear-color-end: #FF9933;
 		}
 	}
 	.body{
-		height: 900rpx;
+		height: 700rpx;
 		
 		.body-scroll{
 			height: 880rpx;

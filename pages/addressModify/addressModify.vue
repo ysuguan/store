@@ -27,7 +27,7 @@
 					<view class="down">提醒：每次下单会默认推荐使用该地址</view>
 				</view>
 				<view class="right">
-					<u-switch v-model="isDefault"></u-switch>
+					<u-switch v-model="isDefault" active-color="red"></u-switch>
 				</view>
 			</view>
 		</scroll-view>
@@ -39,6 +39,8 @@
 				保存
 			</view>
 		</view>
+		
+		<yd-pick-region></yd-pick-region>
 	</view>
 </template>
 
@@ -48,13 +50,15 @@
 			return {
 				isDefault: false,
 				form: {
-					name: '',
-					cellphone: '',
-					area: '',
-					address: '',
+					name: 'memememe',
+					cellphone: '11121123434',
+					area: '江苏省苏州市金枫路',
+					address: '东创科技园8888号',
 					default: false,
 				}
 			}
+		},
+		mounted() {
 		},
 		methods: {
 			goBack() {

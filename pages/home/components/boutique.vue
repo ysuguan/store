@@ -93,8 +93,8 @@
 					<view class="com-tab-price">
 						<text>价格</text>
 						<view class="price-icon">
-							<u-icon name="arrow-up-fill" size="5" :color="!ascending&&currentComTab==3?'red':'gray'"></u-icon>
-							<u-icon name="arrow-down-fill" size="5" :color="ascending&&currentComTab==3?'red':'gray'"></u-icon>
+							<u-icon name="arrow-up-fill" size="18" :color="!ascending&&currentComTab==3?'red':'gray'"></u-icon>
+							<u-icon name="arrow-down-fill" size="18" :color="ascending&&currentComTab==3?'red':'gray'"></u-icon>
 						</view>
 					</view>
 				</u-grid-item>
@@ -349,7 +349,7 @@
 		}
 		
 		.recommand-text{
-			font-size: 12rpx;
+			font-size: 25rpx;
 		}
 	}
 }

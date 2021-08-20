@@ -10,8 +10,8 @@
 				</view>
 				<view class="detail">
 					<view class="up-side">
-						<view class="commodity">
-							<view class="com-img" :style="getComStyle()">
+						<view class="commodity" :class="{'commodity-a': checkList[0][0]}">
+							<view class="com-img" :style="getComStyle()" @tap="goDetail">
 							</view>
 							<view class="text-box">
 								<view class="select" @tap="showOptions">
@@ -22,9 +22,10 @@
 									￥229.00
 								</view>
 							</view>
+							<u-checkbox disabled @change='changeCheck' class="check-box" v-model="checkList[0][0]" name="333" active-color='red' shape="circle"></u-checkbox>
 						</view>
-						<view class="commodity">
-							<view class="com-img" :style="getComStyle()">
+						<view class="commodity" :class="{'commodity-a': checkList[0][1]}">
+							<view class="com-img" :style="getComStyle()" @tap="goDetail">
 							</view>
 							<view class="text-box">
 								<view class="select">
@@ -35,6 +36,7 @@
 									￥229.00
 								</view>
 							</view>
+							<u-checkbox @change='changeCheck' class="check-box" v-model="checkList[0][1]" name="333" active-color='red' shape="circle"></u-checkbox>
 						</view>
 					</view>
 					<view class="down-side">
@@ -62,8 +64,8 @@
 				</view>
 				<view class="detail">
 					<view class="up-side">
-						<view class="commodity">
-							<view class="com-img" :style="getComStyle()">
+						<view class="commodity" :class="{'commodity-a': checkList[item][0]}">
+							<view class="com-img" :style="getComStyle()" @tap="goDetail">
 							</view>
 							<view class="text-box">
 								<view class="select" @tap="showOptions">
@@ -74,9 +76,10 @@
 									￥229.00
 								</view>
 							</view>
+							<u-checkbox disabled @change='changeCheck' class="check-box" v-model="checkList[item][0]" name="333" active-color='red' shape="circle"></u-checkbox>
 						</view>
-						<view class="commodity">
-							<view class="com-img" :style="getComStyle()">
+						<view class="commodity" :class="{'commodity-a': checkList[item][0]}">
+							<view class="com-img" :style="getComStyle()" @tap="goDetail">
 							</view>
 							<view class="text-box">
 								<view class="select">
@@ -87,6 +90,7 @@
 									￥229.00
 								</view>
 							</view>
+							<u-checkbox @change='changeCheck' class="check-box" v-model="checkList[item][1]" name="333" active-color='red' shape="circle"></u-checkbox>
 						</view>
 					</view>
 					<view class="down-side">
@@ -120,13 +124,12 @@
 		mixins:[titleReset],
 		data() {
 			return {
+				checkList: [[true, false],[true, false],[true, false],[true, false],[true, false],[true, false]],
 				selectPopShow: false,
 				popNew: true,
 			}
 		},
 		mounted() {
-			document.title = '大药房';
-			
 		},
 		computed:{
 			btnCartStyle() {
@@ -139,6 +142,14 @@
 			}
 		},
 		methods: {
+			goDetail() {
+				uni.navigateTo({
+					url: '/pages/detail/detail'
+				})
+			},
+			changeCheck() {
+				console.log(this.checkList);
+			},
 			goBack() {
 				uni.navigateBack({});
 			},
@@ -162,7 +173,7 @@
 				}
 			},
 			showOptions() {
-				console.log(123);
+				this.selectPopShow = true;				
 			},
 			getItemStyle() {
 				let item = require("../../static/image/commodity.png");
@@ -187,10 +198,16 @@
 $title-height: 50rpx;
 $border-raduis: 20rpx;
 
+/deep/.u-checkbox__icon-wrap--disabled{
+	background-color: red;
+	border-color: red;
+}
+
 .page-wrap {
 	background-color: black;
 	height: 100vh;
 }
+
 .content{
 	margin: 0 20rpx;
 	
@@ -285,12 +302,26 @@ $border-raduis: 20rpx;
 	}
 }
 
+.commodity-a{
+	border:1px solid $basic-color !important;
+}
+
 .commodity{
+	position: relative;
 	height: 360rpx;
 	width: 260rpx;
-	border:1px solid $basic-color;
 	border-radius: $border-raduis;
 	margin-right: 10rpx;
+	box-sizing: border-box;
+	border:1px solid $page-bgc;
+	
+	.check-box{
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 40rpx;
+		width: 40rpx;
+	}
 	.com-img{
 		height: 240rpx;
 		border-radius: $border-raduis;

@@ -51,7 +51,7 @@
 								<text>效果效果效果效果效果效果效果效果效果效果效果效果</text>
 							</view>
 							<view class="price">
-								<u-icon name="rmb" size="5"></u-icon>
+								<u-icon name="rmb" size="20"></u-icon>
 								4.0
 							</view>
 						</view>
@@ -207,7 +207,7 @@
 				display: flex;
 				height: 80rpx;
 				line-height: 80rpx;
-				font-size: 15rpx;
+				font-size: 30rpx;
 				font-weight: 400;
 				.promo-tab-item{
 					flex-shrink: 0;
@@ -248,7 +248,7 @@
 					border-radius: 10rpx;
 				}
 				.promo-com-item-desc{
-					font-size: 10rpx;
+					font-size: 20rpx;
 					margin: 20rpx;
 					
 					.name{

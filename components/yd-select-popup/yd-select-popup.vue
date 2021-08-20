@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="com">
 		<u-popup v-model="isShow" mode="bottom" :closeable="true" @close="popClose">
 			<view  class="content">
 				<view class="head">
@@ -8,7 +8,7 @@
 					</view>
 					<view class="head-info">
 						<view class="info-price">
-							<u-icon name="rmb" color="red" size="15"></u-icon>
+							<u-icon name="rmb" color="red" size="20"></u-icon>
 							{{comInfo.price}}
 						</view>
 						<view class="info-else">
@@ -153,7 +153,7 @@ $linear-color-end: #FF9933;
 .content{
 	position: relative;
 	padding: 20rpx;
-	height: 1200rpx;
+	height: 1000rpx;
 	
 	.loading{
 		position: absolute;
@@ -188,11 +188,12 @@ $linear-color-end: #FF9933;
 			margin-left: 20rpx;
 			
 			.info-price{
+				font-size: 30rpx;
 				color: $basic-color;
 			}
 			.info-else{
 				color: gray;
-				font-size: 20rpx;
+				font-size: 25rpx;
 				
 				text:nth-child(2){
 					margin-left: 20rpx;
@@ -201,7 +202,7 @@ $linear-color-end: #FF9933;
 		}
 	}
 	.body{
-		height: 900rpx;
+		height: 700rpx;
 		
 		.body-scroll{
 			height: 880rpx;
@@ -238,6 +239,7 @@ $linear-color-end: #FF9933;
 }
 
 .option-item{
+	font-size: 25rpx;
 	margin: 10rpx;
 	color: black;
 	background-color: #F1F1F1;

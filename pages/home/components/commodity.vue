@@ -4,7 +4,7 @@
 			<yd-commodity-tabs :customCurrentTab="currentCommodityTab" :mainMode="false" 
 			@commodityTabsClick="commodityTabsClick"></yd-commodity-tabs>
 		</view>
-		<yd-commodity-list :list="[10]" mode="list"></yd-commodity-list>
+		<yd-commodity-list :list="[10]" :mode="listMode"></yd-commodity-list>
 	</view>
 </template>
 
@@ -14,11 +14,13 @@
 		data() {
 			return {
 				currentCommodityTab: 0,
+				listMode: 'list',
 			}
 		},
 		methods:{
 			commodityTabsClick(args){
-				console.log(123);
+				// console.log(args.showMode);
+				this.listMode = args.showMode==0?'block':'list';
 			},
 		}
 	}

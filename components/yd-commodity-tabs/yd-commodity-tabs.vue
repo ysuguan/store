@@ -17,10 +17,10 @@
 				</view>
 			</u-grid-item>
 		</u-grid>
-		<u-grid :col="2" class="condition" :border="false" @click="filterClick" hover-class='false'>
+		<u-grid :col="2" class="condition" :border="false" @tap="filterClick" hover-class='false'>
 			<u-grid-item :bgColor="bgColor" index="0">
 				<view class="stack-only">
-					<u-icon name="checkbox-mark" size="10" :color="stackOnlyColor"></u-icon><view :style="stackOnlyActive">仅看有货</view>
+					<u-icon name="checkbox-mark" size="25" :color="stackOnlyColor"></u-icon><view :style="stackOnlyActive">仅看有货</view>
 				</view>
 			</u-grid-item>
 			<u-grid-item :bgColor="bgColor" index="1">

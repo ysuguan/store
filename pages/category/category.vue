@@ -15,7 +15,7 @@
 									<view class="color-block"></view>
 									<view class="text">{{item.name}}</view>
 								</view>
-								<u-icon name="arrow-right" size="10"></u-icon>
+								<u-icon name="arrow-right" size="25"></u-icon>
 							</view>
 						</view>
 						<view class="recommand">
