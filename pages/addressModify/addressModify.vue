@@ -14,7 +14,7 @@
 					<u-input v-model="form.cellphone" placeholder="请输入收件人手机号"></u-input>
 				</u-form-item>
 				<u-form-item label="所在地区" prop="area">
-					<u-input v-model="form.area" placeholder="省市区县、乡镇等"></u-input>
+					<u-input v-model="form.area" placeholder="省市区县、乡镇等" @focus="choseArea"></u-input>
 				</u-form-item>
 				<u-form-item label="详细地址" prop="address">
 					<u-input class="address" type="textarea" v-model="form.address" placeholder="街道、楼牌号等"></u-input>
@@ -40,15 +40,21 @@
 			</view>
 		</view>
 		
-		<yd-pick-region></yd-pick-region>
+		<region-pop :comShow="regionPopShow" @regionPopClose="closeRegionPop"></region-pop>
 	</view>
 </template>
 
 <script>
+	import regionPop from "./components/regionPop/regionPop.vue"
+	
 	export default {
+		components: {
+			'region-pop': regionPop,
+		},
 		data() {
 			return {
 				isDefault: false,
+				regionPopShow: false,
 				form: {
 					name: 'memememe',
 					cellphone: '11121123434',
@@ -63,6 +69,12 @@
 		methods: {
 			goBack() {
 				uni.navigateBack({})
+			},
+			choseArea() {
+				this.regionPopShow = true;
+			},
+			closeRegionPop() {
+				this.regionPopShow = false;
 			},
 			saveAddr() {
 				console.log('地址已保存');

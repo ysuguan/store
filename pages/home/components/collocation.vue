@@ -2,7 +2,7 @@
 	<view class="collocation">
 			<view class="collocation-item" v-for="collocation in 10">
 				<view class="collocation-img" :style="collocationImgStyle"  @tap="goCollocation">
-					<view style="color: white; font-size: 30rpx;">
+					<view class="collocation-img-text" style="color: white; font-size: 35rpx;">
 						营养补钙补充维生素
 						<u-icon name="arrow-right" color="white"></u-icon>
 					</view>
@@ -15,7 +15,7 @@
 					</view>
 					<view class="collocation-see-more" @tap="goCollocation">
 						去看看
-						<u-icon name="play-right-fill" color="gray" size="10"></u-icon>
+						<u-icon name="play-right-fill" color="gray" size="25"></u-icon>
 					</view>
 				</view>
 			</view>
@@ -73,6 +73,12 @@ $div-border-radius: 20rpx;
 			border-radius: $div-border-radius;
 			background-color: white;
 			padding: 20rpx;
+			
+			.collocation-img-text{
+				background-color: rgba($color: black, $alpha: .3);
+				padding: 20rpx;
+				border-radius: 20rpx;
+			}
 		}
 		
 		.collocation-detail{
@@ -95,7 +101,7 @@ $div-border-radius: 20rpx;
 				height: 80rpx;
 				width: 120rpx;
 				line-height: 80rpx;
-				font-size: 15rpx;
+				font-size: 25rpx;
 				text-align: center;
 				color: gray;
 			}

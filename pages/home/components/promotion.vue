@@ -248,7 +248,7 @@
 					border-radius: 10rpx;
 				}
 				.promo-com-item-desc{
-					font-size: 20rpx;
+					font-size: 25rpx;
 					margin: 20rpx;
 					
 					.name{

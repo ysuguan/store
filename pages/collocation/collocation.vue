@@ -16,7 +16,7 @@
 							<view class="text-box">
 								<view class="select" @tap="showOptions">
 									<view class="option-text" >钙尔奇碳酸钙100片</view>
-									<u-icon name="arrow-down" size="8"></u-icon>
+									<u-icon name="arrow-down" size="25"></u-icon>
 								</view>
 								<view class="single-price">
 									￥229.00
@@ -30,7 +30,7 @@
 							<view class="text-box">
 								<view class="select">
 									<view class="option-text" @tap="showOptions">钙尔奇碳酸钙100片</view>
-									<u-icon name="arrow-down" size="8"></u-icon>
+									<u-icon name="arrow-down" size="25"></u-icon>
 								</view>
 								<view class="single-price">
 									￥229.00
@@ -42,7 +42,7 @@
 					<view class="down-side">
 						<view class="total-price">
 							共1件，合计: 
-							<u-icon name="rmb" size="15" color="#FC3C2D"></u-icon>
+							<u-icon name="rmb" size="25" color="#FC3C2D"></u-icon>
 							<text class="price-num">229.00</text>
 						</view>
 						<u-button class="add-cart" type="error" shape="circle" :customStyle="btnCartStyle" @tap="showDetail">加入购物车</u-button>
@@ -70,7 +70,7 @@
 							<view class="text-box">
 								<view class="select" @tap="showOptions">
 									<view class="option-text">钙尔奇碳酸钙100片</view>
-									<u-icon name="arrow-down" size="8"></u-icon>
+									<u-icon name="arrow-down" size="25"></u-icon>
 								</view>
 								<view class="single-price">
 									￥229.00
@@ -84,7 +84,7 @@
 							<view class="text-box">
 								<view class="select">
 									<view class="option-text">钙尔奇碳酸钙100片</view>
-									<u-icon name="arrow-down" size="8"></u-icon>
+									<u-icon name="arrow-down" size="25"></u-icon>
 								</view>
 								<view class="single-price">
 									￥229.00
@@ -96,7 +96,7 @@
 					<view class="down-side">
 						<view class="total-price">
 							共1件，合计: 
-							<u-icon name="rmb" size="15" color="#FC3C2D"></u-icon>
+							<u-icon name="rmb" size="25" color="#FC3C2D"></u-icon>
 							<text class="price-num">229.00</text>
 						</view>
 						<u-button class="add-cart" type="error" shape="circle" :customStyle="btnCartStyle" @tap="showDetail">加入购物车</u-button>
@@ -235,11 +235,11 @@ $border-raduis: 20rpx;
 				.desc-title{
 					height: 60rpx;
 					line-height: 60rpx;
-					font-size: 30rpx;
+					font-size: 35rpx;
 					font-weight: bolder;
 				}
 				.desc-detail{
-					font-size: 20rpx;
+					font-size: 30rpx;
 					text-align: center;
 					
 					text-overflow: ellipsis;
@@ -338,7 +338,7 @@ $border-raduis: 20rpx;
 			border-radius: 20rpx;
 			padding: 2rpx 15rpx;
 			.option-text{
-				font-size: 9rpx;
+				font-size: 25rpx;
 				
 				text-overflow: ellipsis;
 				display: -webkit-box;
