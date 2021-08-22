@@ -40,7 +40,7 @@
 			</view>
 		</view>
 		
-		<region-pop :comShow="regionPopShow" @regionPopClose="closeRegionPop"></region-pop>
+		<region-pop :comShow="regionPopShow" @regionPopClose="closeRegionPop" @regionChecked="regionChecked"></region-pop>
 	</view>
 </template>
 
@@ -73,7 +73,13 @@
 			choseArea() {
 				this.regionPopShow = true;
 			},
-			closeRegionPop() {
+			regionChecked(args) {
+				this.form.area = args;
+			},
+			closeRegionPop(args=null) {
+				if(args){
+					this.form.area = args;
+				}
 				this.regionPopShow = false;
 			},
 			saveAddr() {

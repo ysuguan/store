@@ -11,7 +11,8 @@
 				</view>
 			</view>
 			<view class="body" ref="body" :style="scrollStyle">
-				<scroll-view class="area" scroll-y="true" ref="area" :style="scrollStyle">
+				<scroll-view class="area" scroll-y="true" ref="area" :style="scrollStyle" :scroll-top="scrollY" 
+				@scroll="synchronizeScroll">
 					<view class="hot-city" v-show="this.currentLevel==0">
 						<view class="hot-city-title">热门城市</view>
 						<u-grid class="hot-city-list" :col="4" :border="false" hover-class="none">
@@ -20,18 +21,19 @@
 							</u-grid-item>
 						</u-grid>
 					</view>
-					<view class="area-list">
-						<view class="area-list-cate" v-for="letter in letters" :ref="letter">
+					<view class="area-list" ref="letters">
+						<view class="area-list-cate" v-for="letter in letters">
 							<view class="area-letter">{{letter}}</view>
 							<view class="area-item" v-for="(item, index) in activeList[currentLevel]" v-if="item.pyStart==letter" 
 							:key="item.pinyin+index" @tap="choseArea(item)">
-								<u-icon name="checkbox-mark" color='red' size='25' v-if="tabList.length>0&&item.code==tabList[currentLevel].code"></u-icon>
+								<u-icon name="checkbox-mark" color='red' size='25' 
+								v-if="tabList.length>0&&item.code==tabList[currentLevel].code"></u-icon>
 								<text>{{item.name}}</text>
 							</view>
 						</view>
 					</view>
 				</scroll-view>
-				<picker-view class="letters" indicator-class="indicator" mask-class="mask">
+				<picker-view class="letters" indicator-class="indicator" mask-class="mask" :value="currentLetter" @change="changePick">
 					<picker-view-column>
 						<view v-for="item in letters" :key="item">{{item}}</view>
 					</picker-view-column>
@@ -58,7 +60,12 @@
 			return {
 				currentLevel: 0,
 				isShow: false,
+				scrollY: 0, 
 				regions,
+				activeList:[],
+				tabList: [],
+				lettersPos: [],
+				currentLetter: [0],
 				hotCity: [
 					{short:'北京', code: 11}, 
 					{short:'上海', code: 31}, 
@@ -73,8 +80,7 @@
 					{short:'重庆', code: 50}, 
 					{short:'成都', code: 5101},
 				],
-				activeList:[],
-				tabList: [],
+				
 			}
 		},
 		created() {
@@ -82,8 +88,8 @@
 			this.setLevel(this.regions, 0);
 			this.activeList.push(this.regions);
 		},
-		mounted() {
-			// console.log(this.regions);
+		updated() {
+			this.setLettersPos();
 		},
 		computed: {
 			//根据tablist是否有值动态设置滚动框高度
@@ -94,7 +100,7 @@
 				return {};
 			},
 			letters() {
-				return new Set(this.activeList[this.currentLevel].map(item=> item.pyStart));
+				return Array.from(new Set(this.activeList[this.currentLevel].map(item=> item.pyStart)));
 			},
 			//决定是否展示tabbar并压缩滚动框高度
 			tabbarShow() {
@@ -102,8 +108,34 @@
 			}
 		},
 		methods: {
+			//每次update时，更新页面各个字母的顶部位置
+			setLettersPos() {
+				this.lettersPos = [];
+				this.letters.map((item, index) => {
+					this.lettersPos.push(this.$refs.letters.$children[index].$el.offsetTop);
+				});
+			},
+			//同步右侧字母列表滚动
+			synchronizeScroll(e) {
+				this.scrollY = e.detail.scrollTop;
+				this.lettersPos.map((item, index) => {
+					if(this.scrollY>item&&this.scrollY<this.lettersPos[index+1]){
+						this.currentLetter.splice(0, 1, index);
+					}
+				})
+			},
+			//同步左侧地区列表滚动
+			changePick(e) {
+				let picked = e.detail.value[0];
+				this.scrollY = this.lettersPos[picked];
+			},
+			//地区列表和字母列表滚动到选中位置，默认0
 			clickTab(index) {
 				this.currentLevel = index;
+				let letter = this.tabList[index].pyStart;
+				letter = this.letters.indexOf(letter);
+				this.scrollY = this.lettersPos[letter];
+				this.currentLetter.splice(0, 1, letter);
 			},
 			//移除多余的层级如（市辖区、县）
 			rmMask(arr) {
@@ -127,12 +159,21 @@
 				return res;
 			},
 			
-			//确定各地区层级，从0开始;顺便为hotCity绑定数据对象
-			setLevel(arr, level) {
+			//确定各地区层级，从0开始;顺便为hotCity绑定数据对象;为各级子地区设置父节点索引树
+			setLevel(arr, level, tree=null) {
 				for(let i=0; i<arr.length; i++){
+					let treeArg = [];
 					arr[i].level = level;
+					if(tree){
+						//连续赋值会有引用问题,下方对treeArg的操作会影响到arr[i].tree
+						arr[i].tree = [...tree];
+						treeArg = [...tree];
+					}else{
+						arr[i].tree = null;
+					}
+					treeArg.push(i);
 					if('childs' in arr[i]){
-						this.setLevel(arr[i].childs, level+1)
+						this.setLevel(arr[i].childs, level+1, treeArg);
 					}
 					//为hotCity绑定数据对象
 					for(let index in this.hotCity){
@@ -151,7 +192,7 @@
 				this.updateTabList(area);
 			},
 			updateTabList(area) {
-				this.tabList.splice(area.level, 10, {code: area.code, name: area.name});
+				this.tabList.splice(area.level, 10, {code: area.code, name: area.name, pyStart: area.pyStart});
 				if('childs' in area){
 					this.tabList.push({code:0, name:'请选择'});
 				}
@@ -164,19 +205,40 @@
 					this.activeList.push(area.childs);
 					this.currentLevel = area.level+1;
 				}else{
-					console.log('选定区域已无子项', area.name);
+					this.endChose(area);
 				}
 			},
 			//检查activelist中选中地区的父级地区是否正确，针对热门城市点击事件设置
 			checkFather(area) {
+				//level=0是最高级地区，不用校验父级地区
 				if(area.level<1){
 					return;
 				}
+				//上一级父级对应无误，不用继续校验
 				let res = this.activeList[area.level-1].filter(item => item.code==area.code);
 				if(res.length>0){
 					return;
 				}
-				
+				//上级错位，更新activeList，更新tabList
+				let superior = this.regions;
+				for(let i=0; i<area.tree.length; i++){
+					this.updateAcitveList(superior[area.tree[i]]);
+					this.updateTabList(superior[area.tree[i]]);
+					superior = superior[area.tree[i]].childs;
+				}
+			},
+			//选到最底层，默认选择结束
+			endChose(area) {
+				let res = ''
+				let superior = this.regions;
+				for(let index of area.tree){
+					res += superior[index].name;
+					if('childs' in superior[index]){
+						superior = superior[index].childs;
+					}
+				}
+				this.$emit('regionChecked', res+area.name);
+				this.close()
 			},
 			close() {
 				this.$emit('regionPopClose');
@@ -185,6 +247,10 @@
 		watch: {
 			comShow(val) {
 				this.isShow = val;
+				//强制更新，否则无法动态控制弹窗滚动
+				if(val){
+					this.$forceUpdate();
+				}
 			},
 		}
 	}
