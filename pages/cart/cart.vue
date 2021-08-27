@@ -75,7 +75,7 @@
 					</view>
 					<u-waterfall v-model="cartsAll" class="recommand-list">
 						<template v-slot:left="{leftList}">
-							<view v-for="(item, index) in leftList" :key="index" class="recommand-item">
+							<!-- <view v-for="(item, index) in leftList" :key="index" class="recommand-item">
 								<image class="recom-item-img"  src="../../static/image/commodity.png" mode="aspectFit"></image>
 								<view class="recom-item-desc">
 									<text>{{item.brand}}</text>
@@ -86,10 +86,13 @@
 									<u-icon name="rmb" size="12"></u-icon>
 									<text>{{item.price}}</text>
 								</view>
+							</view> -->
+							<view class="recommand-item" v-for="(item, index) in leftList" :key="index">
+								<yd-commodity-v :width="340" :sizeRatio="0.65"></yd-commodity-v>
 							</view>
 						</template>
 						<template v-slot:right="{rightList}">
-							<view v-for="(item, index) in rightList" :key="index" class="recommand-item">
+							<!-- <view v-for="(item, index) in rightList" :key="index" class="recommand-item">
 								<image class="recom-item-img"  src="../../static/image/commodity.png" mode="aspectFit"></image>
 								<view class="recom-item-desc">
 									<text>{{item.brand}}</text>
@@ -100,6 +103,9 @@
 									<u-icon name="rmb" size="12"></u-icon>
 									<text>{{item.price}}</text>
 								</view>
+							</view> -->
+							<view class="recommand-item" v-for="(item, index) in rightList" :key="index">
+								<yd-commodity-v :width="340" :sizeRatio="0.65"></yd-commodity-v>
 							</view>
 						</template>
 					</u-waterfall>
@@ -648,33 +654,35 @@
 	}
 	
 	.recommand-list{
-		// background-color: white;
 		border-radius: 20rpx;
-		.recommand-item{
-			background-color: white;
-			margin: 10rpx;
-			padding: 20rpx;
-			border-radius: 20rpx;
-			.recom-item-img{
-				width: 100%;
-				height: 300rpx;
-			}
-			.recom-item-desc{
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp:2;
-				overflow: hidden;
-				white-space:pre-wrap;
+		// .recommand-item{
+		// 	background-color: white;
+		// 	margin: 10rpx;
+		// 	padding: 20rpx;
+		// 	border-radius: 20rpx;
+		// 	.recom-item-img{
+		// 		width: 100%;
+		// 		height: 300rpx;
+		// 	}
+		// 	.recom-item-desc{
+		// 		text-overflow: ellipsis;
+		// 		display: -webkit-box;
+		// 		-webkit-box-orient: vertical;
+		// 		-webkit-line-clamp:2;
+		// 		overflow: hidden;
+		// 		white-space:pre-wrap;
 				
-				text{
-					margin-right: 10rpx;
-				}
-			}
-			.recom-item-price{
-				color: red;
-				font-size: 35rpx;
-			}
+		// 		text{
+		// 			margin-right: 10rpx;
+		// 		}
+		// 	}
+		// 	.recom-item-price{
+		// 		color: red;
+		// 		font-size: 35rpx;
+		// 	}
+		// }
+		.recommand-item{
+			margin-bottom: 10rpx;
 		}
 	}
 }

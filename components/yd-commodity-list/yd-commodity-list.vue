@@ -1,7 +1,37 @@
 <template>
 	<view ref="list" class="list-wrap">
 		<view class="list-item" v-for="(item, index) in list[0]">
-			<yd-commodity-dynamic :mode="itemMode" :height="itemHeight" :width="itemWidth"></yd-commodity-dynamic>
+			<!-- <yd-commodity-dynamic :mode="itemMode" :height="itemHeight" :width="itemWidth"></yd-commodity-dynamic> -->
+			<yd-commodity-v v-if="mode=='block'" :width="350">
+				<template v-slot:rank>
+					<u-tag mode='light' type="error" size="mini" color="red" text="本店感冒药热销第1名"
+					style="font-size: 25rpx;"></u-tag>
+				</template>
+				<template v-slot:priceTips>
+					<u-tag mode='light' type="error" size='mini' bgColor="white" color="red" text="秒杀"></u-tag>
+					<u-tag mode='light' type="error" size='mini' bgColor="white" color="red" text="限购"></u-tag>
+				</template>
+				<template v-slot:remarks>
+					<view>
+						<text>10万+条评价  好评99%</text>
+					</view>
+				</template>
+			</yd-commodity-v>
+			<yd-commodity-h v-else :height="250" :sizeRatio="0.352">
+				<template v-slot:rank>
+					<u-tag mode='light' type="error" size="mini" color="red" text="本店感冒药热销第1名"
+					style="font-size: 25rpx;"></u-tag>
+				</template>
+				<template v-slot:priceTips>
+					<u-tag mode='light' type="error" size='mini' bgColor="white" color="red" text="秒杀"></u-tag>
+					<u-tag mode='light' type="error" size='mini' bgColor="white" color="red" text="限购"></u-tag>
+				</template>
+				<template v-slot:remarks>
+					<view>
+						<text>10万+条评价  好评99%</text>
+					</view>
+				</template>
+			</yd-commodity-h>
 		</view>
 	</view>
 </template>

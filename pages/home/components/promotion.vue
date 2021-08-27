@@ -4,7 +4,7 @@
 				<view class="promo-tag">
 					每日特价
 				</view>
-				<view class="promo-com">
+				<!-- <view class="promo-com">
 					<image class="promo-img" src="../../../static/image/commodity.png" mode="aspectFit"></image>
 					<view class="promo-desc">
 						<view class="top">
@@ -26,7 +26,15 @@
 							</view>
 						</view>
 					</view>
-				</view>
+				</view> -->
+				<yd-commodity-h :height="250" :sizeRatio="0.3521">
+					<template v-slot:priceTips>
+						<del>￥1999</del>
+					</template>
+					<template v-slot:activeBtn>
+						<u-button type="success" :customStyle="{'font-size':'35rpx'}">抢先看</u-button>
+					</template>
+				</yd-commodity-h>
 			</view>
 			<view class="promo-down">
 				<view class="title">逛促销</view>
@@ -41,7 +49,7 @@
 						<view>促销时间：{{promoTabList[currentPromoTab].time}}</view>
 						<view>促销规则：{{promoTabList[currentPromoTab].rule}}</view>
 					</view>
-					<view class="promo-com-item" v-for="com in promoTabList[currentPromoTab].list" :key="currentPromoTab+'-'+com">
+					<!-- <view class="promo-com-item" v-for="com in promoTabList[currentPromoTab].list" :key="currentPromoTab+'-'+com">
 						<image class="promo-com-item-img" src="../../../static/image/commodity.png" mode="aspectFit"></image>
 						<view class="promo-com-item-desc">
 							<view class="name">
@@ -55,6 +63,10 @@
 								4.0
 							</view>
 						</view>
+					</view> -->
+					<view class="promo-item-box">
+						<yd-commodity-v :width="340" :sizeRatio="0.7" :descFZ="25" :priceFZ="30" 
+						v-for="com in promoTabList[currentPromoTab].list" :key="currentPromoTab+'-'+com"></yd-commodity-v>
 					</view>
 				</view>
 			</view>
@@ -222,58 +234,69 @@
 			
 			.promo-com-list-info{
 				flex-grow: 1;
+				width: 100%;
 				padding: 20rpx;
 				color: $message-text-color;
 				font-weight: lighter;
 				font-size: 20rpx;
 				background-color: rgba($color: $message-bg-color, $alpha: .5);
 			}
-			.promo-com-item{
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-around;
-				align-items: center;
-				width: 50%;
-				height: 450rpx;
-				box-sizing: border-box;
-				border-bottom: 1rpx solid $page-bgc;
-				/deep/.up-side{
-					.title{
-						font-size: 8rpx;
-					}
-				}
-				.promo-com-item-img{
-					height: 300rpx;
-					width: 300rpx;
-					border-radius: 10rpx;
-				}
-				.promo-com-item-desc{
-					font-size: 25rpx;
-					margin: 20rpx;
+			.promo-item-box{
+				display: grid;
+				grid-template-columns: repeat(2, 50%);
+				grid-auto-rows: 500rpx;
+				justify-items: center;
+				
+				width: 100%;
+				
+				
+			}
+			// .promo-com-item{
+			// 	display: flex;
+			// 	flex-wrap: wrap;
+			// 	justify-content: space-around;
+			// 	align-items: center;
+			// 	width: 50%;
+			// 	height: 450rpx;
+			// 	box-sizing: border-box;
+			// 	border-bottom: 1rpx solid $page-bgc;
+			// 	/deep/.up-side{
+			// 		.title{
+			// 			font-size: 8rpx;
+			// 		}
+			// 	}
+			// 	.promo-com-item-img{
+			// 		height: 300rpx;
+			// 		width: 300rpx;
+			// 		border-radius: 10rpx;
+			// 	}
+			// 	.promo-com-item-desc{
+			// 		font-size: 25rpx;
+			// 		margin: 20rpx;
 					
-					.name{
-						line-height: 30rpx;
-						text-overflow: ellipsis;
-						display: -webkit-box;
-						-webkit-box-orient: vertical;
-						-webkit-line-clamp:2;
-						overflow: hidden;
-						white-space:pre-wrap;
+			// 		.name{
+			// 			line-height: 30rpx;
+			// 			text-overflow: ellipsis;
+			// 			display: -webkit-box;
+			// 			-webkit-box-orient: vertical;
+			// 			-webkit-line-clamp:2;
+			// 			overflow: hidden;
+			// 			white-space:pre-wrap;
 						
-						text{
-							padding-right: 20rpx;
-						}
-					}
-					.price{
-						padding: 10rpx 0;
-						color: red;
-						font-size: 35rpx;
-					}
-				}
-			}
-			.promo-com-item:nth-child(even){
-				border-right: 1rpx solid $page-bgc;
-			}
+			// 			text{
+			// 				padding-right: 20rpx;
+			// 			}
+			// 		}
+			// 		.price{
+			// 			padding: 10rpx 0;
+			// 			color: red;
+			// 			font-size: 35rpx;
+			// 		}
+			// 	}
+			// }
+			// .promo-com-item:nth-child(even){
+			// 	border-right: 1rpx solid $page-bgc;
+			// }
 		}
 	}
 }

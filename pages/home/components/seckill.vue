@@ -3,7 +3,7 @@
 			<view class="seckill-head">
 				<view class="seckill-tag"><view class="red-icon"></view> <view >为你推荐</view></view>
 				<view class="seckill-commodity-box" >
-					<yd-commodity-dynamic mode="horizontal" v-for="item in 2">
+					<!-- <yd-commodity-dynamic mode="horizontal" v-for="item in 2">
 						<template v-slot:bottom>
 							<view style="height: 30rpx ;font-size: 25rpx;color: #82848A;"> <del>500</del> </view>
 						</template>
@@ -15,12 +15,22 @@
 								:separatorSize="countDownSet.separatorSize" :separatorColor="countDownSet.separatorColor"></u-count-down>
 							</view>
 						</template>
-					</yd-commodity-dynamic>
+					</yd-commodity-dynamic> -->
+					<yd-commodity-h :height="235" v-for="item in 2">
+						<template v-slot:activeBtn>
+							<view class="seckill-btn">
+								<view>抢先看</view> 
+								<u-count-down :timestamp="countDownSet.timeStamp" :color="countDownSet.color" 
+								:bg-color="countDownSet.bgColor" :fontSize="countDownSet.fontSize" :height="countDownSet.height"
+								:separatorSize="countDownSet.separatorSize" :separatorColor="countDownSet.separatorColor"></u-count-down>
+							</view>
+						</template>
+					</yd-commodity-h>
 				</view>
 				<view class="seckill-tag"><view class="red-icon"></view> <view >更多秒杀</view></view>
 			</view>
 			<view class="seckill-list">
-				<view class="seckill-list-item" v-for="item in 12">
+				<!-- <view class="seckill-list-item" v-for="item in 12">
 					<yd-commodity-dynamic mode="vertical">
 						<template v-slot:bottom>
 							<view style="height: 30rpx ;font-size: 25rpx;color: #82848A;"> <del>500</del> </view>
@@ -34,8 +44,21 @@
 							</view>
 						</template>
 					</yd-commodity-dynamic>
-					
-				</view>
+				</view> -->
+				
+				<yd-commodity-v :width="350" :sizeRatio="0.6" v-for="item in 12">
+					<template v-slot:remarks>
+						<del>￥199</del>
+					</template>
+					<template v-slot:activeBtn>
+						<view class="seckill-btn">
+							<view>抢先看</view> 
+							<u-count-down :timestamp="countDownSet.timeStamp" :color="countDownSet.color" 
+							:bg-color="countDownSet.bgColor" :fontSize="countDownSet.fontSize" :height="countDownSet.height"
+							:separatorSize="countDownSet.separatorSize" :separatorColor="countDownSet.separatorColor"></u-count-down>
+						</view>
+					</template>
+				</yd-commodity-v>
 			</view>
 		</view>
 </template>
@@ -88,16 +111,26 @@
 		}
 	}
 	
+	// .seckill-list{
+	// 	display: flex;
+	// 	flex-wrap: wrap;
+	// 	justify-content: space-between;
+	// 	.seckill-list-item{
+	// 		width: 49%;
+	// 		height: 530rpx;
+	// 		margin-bottom: 5rpx;
+	// 	}
+	// }
+	
 	.seckill-list{
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		.seckill-list-item{
-			width: 49%;
-			height: 530rpx;
-			margin-bottom: 5rpx;
-		}
+		display: grid;
+		grid-template-columns: repeat(2, 50%);
+		grid-auto-rows: 585rpx;
+		justify-items: center;
+		
+		width: 100%;
 	}
+	
 	
 	//秒杀页公用的按钮
 	.seckill-btn{

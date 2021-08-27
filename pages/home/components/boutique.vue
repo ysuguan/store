@@ -7,15 +7,37 @@
 				<view class="recommand-text" :data-index="index">{{item.text}}</view>
 			</view>
 		</view>
-		
-		<yd-type-recommand title='防疫专区' :comList='comList1'></yd-type-recommand>
-		<yd-type-recommand title='热销单品' :comList='comList2'></yd-type-recommand>
-		<yd-type-recommand title='9.9专区' :comList='comList3'>
+		<!-- <yd-type-recommand title='防疫专区' :comList='comList1'></yd-type-recommand> -->
+		<!-- <yd-type-recommand title='热销单品' :comList='comList2'></yd-type-recommand> -->
+		<!-- <yd-type-recommand title='9.9专区' :comList='comList3'>
 			<template v-slot:title="{title}">
 				<u-section :title="title" :right="false" color="red" font-size="30"></u-section>
 			</template>
-		</yd-type-recommand>
-		
+		</yd-type-recommand> -->
+		<view class="type-recommand">
+			<view class="title">
+				<text>防疫专区</text>
+			</view>
+			<view class="com-list" @tap="goDetail">
+				<yd-commodity-v :width="200" :sizeRatio="0.6" :descFZ="28" :priceFZ="35" v-for="item in 6"></yd-commodity-v>
+			</view>
+		</view>
+		<view class="type-recommand">
+			<view class="title">
+				<text>热销单品</text>
+			</view>
+			<view class="com-list"  @tap="goDetail">
+				<yd-commodity-v :width="200" :sizeRatio="0.6" :descFZ="28" :priceFZ="35" v-for="item in 6"></yd-commodity-v>
+			</view>
+		</view>
+		<view class="type-recommand">
+			<view class="title title-red">
+				<text>9.9专区</text>
+			</view>
+			<view class="com-list"  @tap="goDetail">
+				<yd-commodity-v :width="200" :sizeRatio="0.6" :descFZ="28" :priceFZ="35" v-for="item in 9"></yd-commodity-v>
+			</view>
+		</view>
 		<view class="more">
 			<view class="more-title">
 				更多值得买
@@ -28,23 +50,8 @@
 					</view>
 				</view>
 				<view class="more-list">
-					<!-- <view class="more-list-item" v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])">
-						<view class="more-list-item-img">
-							<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
-						</view>
-						<view class="more-list-item-desc">
-							<text>{{item.brand}}</text>
-							<text>{{item.type}}</text>
-							<text>{{item.name}}</text>
-							<text>{{item.specificans}}</text>
-							<text>{{item.desc}}</text>
-						</view>
-						<view class="more-list-item-price">
-							<u-icon name="rmb" size="12"></u-icon>
-							{{item.price}}
-						</view>
-					</view> -->
-					<yd-commodity-dynamic v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])" :mini="true" height="350" width="220" :commodity="item">
+					<yd-commodity-dynamic v-for="item in moreComMap.get(moreCateList[0][currentMoreTab1])" 
+					:mini="true" height="350" width="220" :commodity="item">
 						<template v-slot:bottom>
 							<view></view>
 						</template>
@@ -101,7 +108,7 @@
 			</u-grid>
 				
 			<view class="bouti-com-list">
-				<view class="bouti-com-item" v-for="item in 30" @tap="goDetail">
+				<!-- <view class="bouti-com-item" v-for="item in 30" @tap="goDetail">
 					<view class="bouti-com-item-image">
 						<image src="../../../static/image/commodity.png" mode="aspectFit"></image>
 					</view>
@@ -120,7 +127,15 @@
 						<text>100万+条评价</text>
 						<text>好评率98%</text>
 					</view>
-				</view>
+				</view> -->
+				<yd-commodity-v :width="350" :sizeRatio="0.6" v-for="item in 20">
+					<template v-slot:remarks>
+						<view>
+							<text>100万+条评价</text>
+							<text>好评率97%</text>
+						</view>
+					</template>
+				</yd-commodity-v>
 			</view>
 		</view>
 	</view>
@@ -354,6 +369,29 @@
 	}
 }
 
+.type-recommand{
+	background-color: white;
+	.title{
+		margin-left: 30rpx;
+		height: 100rpx;
+		line-height: 100rpx;
+		font-size: 40rpx;
+		color: #003a6c;
+		font-weight: bolder;
+	}
+	.title-red{
+		color: red;
+		font-size: 30rpx;
+	}
+	.com-list{
+		display: grid;
+		grid-template-columns: repeat(3, 33.33%);
+		grid-auto-rows: 350rpx;
+		justify-items: center;
+		align-items: center;
+	}
+}
+
 .bouti-com-list-wrap{
 	// margin-top: 15rpx;
 	background-color: $page-bgc;
@@ -380,53 +418,63 @@
 	}
 	
 	.bouti-com-list{
-		margin-top: 10rpx;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		.bouti-com-item{
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			width: 49%;
-			margin-bottom: 15rpx;
-			padding: 20rpx;
-			background-color: white;
-			border-radius: 20rpx;
-			.bouti-com-item-image{
-				height: 280rpx;
-				width: 280rpx;
-				
-				image{
-					height: 100%;
-					width: 100%;
-				}
-			}
-			.bouti-com-item-desc{
-				margin: 15rpx 0;
-				text-overflow: ellipsis;
-				display: -webkit-box;
-				-webkit-box-orient: vertical;
-				-webkit-line-clamp:2;
-				overflow: hidden;
-				white-space:pre-wrap;
-			}
-			.bouti-com-item-price{
-				width: 100%;
-				text-align: left;
-				color: red;
-				font-size: 30rpx;
-			}
-			.bouti-com-item-comment{
-				font-size: 10rpx;
-				color: gray;
-				
-				text{
-					margin-right: 10rpx;
-				}
-			}
-		}
+		display: grid;
+		grid-template-columns: repeat(2, 50%);
+		grid-auto-rows: 580rpx;
+		grid-column-gap: 8rpx;
+		grid-row-gap: 10rpx;
+		align-items: center;
+		justify-items: center;
 	}
+	
+	// .bouti-com-list{
+	// 	margin-top: 10rpx;
+	// 	display: flex;
+	// 	flex-wrap: wrap;
+	// 	justify-content: space-between;
+	// 	.bouti-com-item{
+	// 		display: flex;
+	// 		flex-wrap: wrap;
+	// 		justify-content: center;
+	// 		width: 49%;
+	// 		margin-bottom: 15rpx;
+	// 		padding: 20rpx;
+	// 		background-color: white;
+	// 		border-radius: 20rpx;
+	// 		.bouti-com-item-image{
+	// 			height: 280rpx;
+	// 			width: 280rpx;
+				
+	// 			image{
+	// 				height: 100%;
+	// 				width: 100%;
+	// 			}
+	// 		}
+	// 		.bouti-com-item-desc{
+	// 			margin: 15rpx 0;
+	// 			text-overflow: ellipsis;
+	// 			display: -webkit-box;
+	// 			-webkit-box-orient: vertical;
+	// 			-webkit-line-clamp:2;
+	// 			overflow: hidden;
+	// 			white-space:pre-wrap;
+	// 		}
+	// 		.bouti-com-item-price{
+	// 			width: 100%;
+	// 			text-align: left;
+	// 			color: red;
+	// 			font-size: 30rpx;
+	// 		}
+	// 		.bouti-com-item-comment{
+	// 			font-size: 10rpx;
+	// 			color: gray;
+				
+	// 			text{
+	// 				margin-right: 10rpx;
+	// 			}
+	// 		}
+	// 	}
+	// }
 }
 
 .bouti-com-list-wrap-a{
