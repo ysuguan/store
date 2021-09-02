@@ -37,7 +37,6 @@
 </template>
 
 <script>
-	import {trim} from "../../common/utils/index.js";
 	import {titleReset} from "../../common/mixin.js"
 	
 	export default {
@@ -108,7 +107,7 @@
 				this.currentTab = args.currentTab;
 			},
 			changeMode() {
-				this.keyWord = trim(this.keyWord);
+				this.keyWord = this.keyWord.trim();
 				if(this.keyWord.length<=0){
 					this.simpleMode = true;
 				}
@@ -134,7 +133,7 @@
 				if(text){
 					this.keyWord = text;
 				}
-				this.keyWord = trim(this.keyWord);
+				this.keyWord = this.keyWord.trim();
 				if(this.keyWord.length<=0){
 					this.keyWord = this.hotWord[0].name;
 				}

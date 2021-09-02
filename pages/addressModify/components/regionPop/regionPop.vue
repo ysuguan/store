@@ -10,7 +10,7 @@
 					{{item.name}}
 				</view>
 			</view>
-			<view class="body" ref="body" :style="scrollStyle">
+			<view class="body" :style="scrollStyle">
 				<scroll-view class="area" scroll-y="true" ref="area" :style="scrollStyle" :scroll-top="scrollY" 
 				@scroll="synchronizeScroll">
 					<view class="hot-city" v-show="this.currentLevel==0">
